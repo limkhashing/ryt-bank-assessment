@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { Button, Card, Input } from '../components';
-import { COLORS, SPACING } from '../constants';
+import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { useAppSelector } from '../hooks';
 import { formatCurrency } from '../utils';
 
@@ -36,10 +36,6 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
   }, []);
 
   const validateAmount = (value: number) => {
-    if (value <= 0) {
-      setError('Please enter a valid amount');
-      return false;
-    }
     if (currentUser && value > currentUser.balance) {
       setError('Insufficient funds');
       return false;
@@ -56,13 +52,19 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Card style={styles.balanceCard}>
-        <Input
-          label="Available Balance"
-          value={currentUser ? formatCurrency(currentUser.balance) : 'RM0.00'}
-          onChangeText={() => {}}
-          style={styles.input}
-        />
+      <Card style={styles.userInfoCard}>
+        <Text style={styles.userTitle}>From Account</Text>
+        <Text style={styles.userName}>{currentUser?.name}</Text>
+        <Text style={styles.userPhone}>{currentUser?.phoneNumber}</Text>
+        <View style={styles.balanceRow}>
+          <Text style={styles.balanceLabel}>Available Balance:</Text>
+          <Text style={styles.balanceAmount}>
+            {currentUser ? formatCurrency(currentUser.balance) : 'RM0.00'}
+          </Text>
+        </View>
+      </Card>
+
+      <Card style={styles.transferCard}>
         <Input
           label="Amount"
           value={displayAmount}
@@ -80,6 +82,7 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
           style={styles.input}
         />
       </Card>
+      
       <Button
         title="Continue"
         onPress={handleContinue}
@@ -96,7 +99,43 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
     backgroundColor: COLORS.background,
   },
-  balanceCard: {
+  userInfoCard: {
+    marginBottom: SPACING.md,
+  },
+  userTitle: {
+    fontSize: FONT_SIZES.sm,
+    color: COLORS.textSecondary,
+    marginBottom: SPACING.xs,
+  },
+  userName: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: '600',
+    color: COLORS.text,
+    marginBottom: SPACING.xs,
+  },
+  userPhone: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textSecondary,
+    marginBottom: SPACING.md,
+  },
+  balanceRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: SPACING.md,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
+  },
+  balanceLabel: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textSecondary,
+  },
+  balanceAmount: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: '600',
+    color: COLORS.success,
+  },
+  transferCard: {
     marginBottom: SPACING.xl,
   },
   input: {
