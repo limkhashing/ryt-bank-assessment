@@ -163,11 +163,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 'auto',
   },
-  button: {
-    flex: 1,
-    marginHorizontal: SPACING.xs,
+  cancelButton: {
+    flex: 0.5,
   },
   confirmButton: {
+    flex: 1,
     backgroundColor: COLORS.success,
+    marginHorizontal: SPACING.xs,
   },
 });
