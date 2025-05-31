@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Text, Alert } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import * as Contacts from 'expo-contacts';
 import { RootStackParamList, Recipient } from '../types';
-import { Button, Card, Input, Loading } from '../components';
+import { Button, Card, Input } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
@@ -17,8 +16,7 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
   const { amount, note } = route.params;
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
-  const [loading, setLoading] = useState(false);
-
+  
   const filteredRecipients = RECENT_RECIPIENTS.filter(recipient =>
     recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery))
@@ -28,47 +26,11 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
     setSelectedRecipient(recipient);
   }, []);
 
-  const handlePickContact = async () => {
-    try {
-      setLoading(true);
-      
-      const { status } = await Contacts.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert(
-          'Permission Required',
-          'Please grant contacts permission to select a recipient from your contacts.'
-        );
-        return;
-      }
-
-      // Open contact picker
-      const contact = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
-        pageSize: 1,
-        sort: Contacts.SortTypes.FirstName,
-      });
-
-      if (contact.data.length > 0) {
-        const selectedContact = contact.data[0];
-        if (selectedContact.name && selectedContact.phoneNumbers?.[0]?.number) {
-          const newRecipient: Recipient = {
-            id: selectedContact.id || `contact_${Date.now()}`,
-            name: selectedContact.name,
-            phoneNumber: selectedContact.phoneNumbers[0].number,
-          };
-          setSelectedRecipient(newRecipient);
-        } else {
-          Alert.alert('Invalid Contact', 'Please select a contact with a name and phone number.');
-        }
-      }
-    } catch (error) {
-      Alert.alert(
-        'Error',
-        'Failed to access contacts. Please try again.'
-      );
-    } finally {
-      setLoading(false);
-    }
+  const handlePickContact = () => {
+    navigation.navigate('Contacts', {
+      amount,
+      note,
+    });
   };
 
   const handleContinue = useCallback(() => {
@@ -99,10 +61,6 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
     </TouchableOpacity>
   ), [selectedRecipient]);
 
-  if (loading) {
-    return <Loading message="Accessing contacts..." />;
-  }
-
   return (
     <View style={styles.container}>
       <Card style={styles.searchCard}>
@@ -111,6 +69,7 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
           value={searchQuery}
           onChangeText={setSearchQuery}
           style={styles.searchInput}
+          autoCapitalize="words"
         />
       </Card>
 

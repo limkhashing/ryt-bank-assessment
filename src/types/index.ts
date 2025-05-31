@@ -45,6 +45,10 @@ export type RootStackParamList = {
     amount: number;
     note?: string;
   };
+  Contacts: {
+    amount: number;
+    note?: string;
+  };
   ConfirmTransfer: {
     amount: number;
     recipient: Recipient;

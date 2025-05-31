@@ -7,6 +7,7 @@ import { RootStackParamList } from './src/types';
 import {
   TransferScreen,
   SelectRecipientScreen,
+  ContactsScreen,
   ConfirmTransferScreen,
   ReceiptScreen,
 } from './src/screens';
@@ -42,6 +43,11 @@ export default function App() {
             name="SelectRecipient"
             component={SelectRecipientScreen}
             options={{ title: 'Select Recipient' }}
+          />
+          <Stack.Screen
+            name="Contacts"
+            component={ContactsScreen}
+            options={{ title: 'Select Contact' }}
           />
           <Stack.Screen
             name="ConfirmTransfer"
