@@ -10,9 +10,9 @@ const mockUser: User = {
 
 const mockRecipients: Recipient[] = [
   { id: '1', name: 'Alice Johnson', phoneNumber: '+1234567890', isRecent: true },
-  { id: '2', name: 'Bob Wilson', email: 'bob@example.com', isRecent: true },
+  { id: '2', name: 'Bob Wilson', phoneNumber: '+1234567890', isRecent: true },
   { id: '3', name: 'Carol Brown', phoneNumber: '+1987654321' },
-  { id: '4', name: 'David Lee', email: 'david@example.com' },
+  { id: '4', name: 'David Lee', phoneNumber: '+1234567890' },
 ];
 
 class TransferService {
