@@ -1,25 +1,42 @@
 import React from 'react';
-import { View, StyleSheet, Text, Animated } from 'react-native';
+import { View, StyleSheet, Text, Animated, BackHandler } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { Button, Card } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { formatCurrency, formatDate } from '../utils';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'TransferStatus'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Receipt'>;
 
-export const TransferStatusScreen: React.FC<Props> = ({ navigation, route }) => {
+export const ReceiptScreen: React.FC<Props> = ({ navigation, route }) => {
   const { transaction } = route.params;
   const scaleAnim = React.useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
+    // Start animation
     Animated.spring(scaleAnim, {
       toValue: 1,
       useNativeDriver: true,
       tension: 50,
       friction: 7,
     }).start();
+
+    // Handle hardware back button
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      handleDone();
+      return true;
+    });
+
+    return () => backHandler.remove();
   }, []);
+
+  const handleDone = () => {
+    // Reset navigation stack to Transfer screen
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Transfer' }],
+    });
+  };
 
   const getStatusColor = () => {
     switch (transaction.status) {
@@ -89,7 +106,7 @@ export const TransferStatusScreen: React.FC<Props> = ({ navigation, route }) => 
 
         <Button
           title="Done"
-          onPress={() => navigation.navigate('Transfer')}
+          onPress={handleDone}
           style={styles.button}
         />
       </Animated.View>

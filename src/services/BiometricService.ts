@@ -22,6 +22,7 @@ export const BiometricService = {
 
       return { success };
     } catch (error) {
+      console.error('Biometric authentication failed:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Authentication failed',

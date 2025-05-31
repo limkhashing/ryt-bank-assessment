@@ -9,10 +9,9 @@ const mockUser: User = {
 };
 
 const mockRecipients: Recipient[] = [
-  { id: '1', name: 'Alice Johnson', phoneNumber: '+1234567890', isRecent: true },
-  { id: '2', name: 'Bob Wilson', email: 'bob@example.com', isRecent: true },
-  { id: '3', name: 'Carol Brown', phoneNumber: '+1987654321' },
-  { id: '4', name: 'David Lee', email: 'david@example.com' },
+  { id: '1', name: 'Emma Watson', phoneNumber: '+6016-501 7727', isRecent: true },
+  { id: '2', name: 'Elon Musk', phoneNumber: '+6012-320 3035', isRecent: true },
+  { id: '3', name: 'Uzumaki Naruto', phoneNumber: '+6013-2612 329' },
 ];
 
 class TransferService {
@@ -21,6 +20,7 @@ class TransferService {
       const user = await simulateApiCall(mockUser);
       return { success: true, data: user };
     } catch (error) {
+      console.error('Error fetching user data:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Failed to fetch user data',
@@ -33,6 +33,7 @@ class TransferService {
       const recipients = await simulateApiCall(mockRecipients);
       return { success: true, data: recipients };
     } catch (error) {
+      console.error('Error fetching recipients:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Failed to fetch recipients',
@@ -50,6 +51,7 @@ class TransferService {
 
       return { success: true, data: processedTransaction };
     } catch (error) {
+      console.error('Error processing transfer:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Failed to process transfer',

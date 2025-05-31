@@ -3,7 +3,7 @@ import { API_DELAYS } from '../constants';
 export const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'MYR',
   }).format(amount);
 };
 

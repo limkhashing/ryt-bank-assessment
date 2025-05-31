@@ -1,6 +1,7 @@
 export interface User {
   id: string;
   name: string;
+  phoneNumber: string;
   balance: number;
 }
 
@@ -8,7 +9,6 @@ export interface Recipient {
   id: string;
   name: string;
   phoneNumber?: string;
-  email?: string;
   isRecent?: boolean;
 }
 
@@ -41,13 +41,20 @@ export interface ApiResponse<T> {
 
 export type RootStackParamList = {
   Transfer: undefined;
-  SelectRecipient: undefined;
+  SelectRecipient: {
+    amount: number;
+    note?: string;
+  };
+  Contacts: {
+    amount: number;
+    note?: string;
+  };
   ConfirmTransfer: {
     amount: number;
     recipient: Recipient;
     note?: string;
   };
-  TransferStatus: {
+  Receipt: {
     transaction: Transaction;
   };
 };

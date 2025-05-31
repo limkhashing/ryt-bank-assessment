@@ -7,8 +7,9 @@ import { RootStackParamList } from './src/types';
 import {
   TransferScreen,
   SelectRecipientScreen,
+  ContactsScreen,
   ConfirmTransferScreen,
-  TransferStatusScreen,
+  ReceiptScreen,
 } from './src/screens';
 import { COLORS } from './src/constants';
 import { StatusBar } from 'expo-status-bar';
@@ -44,15 +45,20 @@ export default function App() {
             options={{ title: 'Select Recipient' }}
           />
           <Stack.Screen
+            name="Contacts"
+            component={ContactsScreen}
+            options={{ title: 'Select Contact' }}
+          />
+          <Stack.Screen
             name="ConfirmTransfer"
             component={ConfirmTransferScreen}
             options={{ title: 'Confirm Transfer' }}
           />
           <Stack.Screen
-            name="TransferStatus"
-            component={TransferStatusScreen}
+            name="Receipt"
+            component={ReceiptScreen}
             options={{
-              title: 'Transfer Status',
+              title: 'Receipt',
               headerLeft: () => null, // Disable back button
             }}
           />

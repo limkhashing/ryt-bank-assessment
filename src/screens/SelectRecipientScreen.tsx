@@ -2,42 +2,46 @@ import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Recipient } from '../types';
-import { Button, Card, Input, Loading } from '../components';
+import { Button, Card, Input } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
-import { useAppSelector } from '../hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
 
-const MOCK_RECIPIENTS: Recipient[] = [
-  { id: '1', name: 'John Doe', phoneNumber: '+1234567890', isRecent: true },
-  { id: '2', name: 'Jane Smith', email: 'jane@example.com', isRecent: true },
-  { id: '3', name: 'Bob Wilson', phoneNumber: '+1987654321' },
+const RECENT_RECIPIENTS: Recipient[] = [
+  { id: '1', name: 'Luffy', phoneNumber: '+6016-593 5703', isRecent: true },
+  { id: '2', name: 'Han Tham', phoneNumber: '+6012-345 6789', isRecent: true },
 ];
 
-export const SelectRecipientScreen: React.FC<Props> = ({ navigation }) => {
+export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) => {
+  const { amount, note } = route.params;
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [recipients] = useState<Recipient[]>(MOCK_RECIPIENTS);
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
-  const [newRecipientName, setNewRecipientName] = useState('');
-
-  const filteredRecipients = recipients.filter(recipient =>
-    recipient.name.toLowerCase().includes(searchQuery.toLowerCase())
+  
+  const filteredRecipients = RECENT_RECIPIENTS.filter(recipient =>
+    recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery))
   );
 
   const handleSelectRecipient = useCallback((recipient: Recipient) => {
     setSelectedRecipient(recipient);
   }, []);
 
+  const handlePickContact = () => {
+    navigation.navigate('Contacts', {
+      amount,
+      note,
+    });
+  };
+
   const handleContinue = useCallback(() => {
     if (selectedRecipient) {
       navigation.navigate('ConfirmTransfer', {
         recipient: selectedRecipient,
-        amount: 0, // This will be updated with the actual amount
-        note: '',
+        amount,
+        note,
       });
     }
-  }, [navigation, selectedRecipient]);
+  }, [navigation, selectedRecipient, amount, note]);
 
   const renderRecipientItem = useCallback(({ item }: { item: Recipient }) => (
     <TouchableOpacity
@@ -50,31 +54,35 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.recipientInfo}>
         <Text style={styles.recipientName}>{item.name}</Text>
         <Text style={styles.recipientDetail}>
-          {item.phoneNumber || item.email}
+          {item.phoneNumber}
         </Text>
       </View>
-      {item.isRecent && (
-        <Text style={styles.recentBadge}>Recent</Text>
-      )}
+      <Text style={styles.recentBadge}>Recent</Text>
     </TouchableOpacity>
   ), [selectedRecipient]);
-
-  if (loading) {
-    return <Loading message="Loading recipients..." />;
-  }
 
   return (
     <View style={styles.container}>
       <Card style={styles.searchCard}>
         <Input
-          placeholder="Search recipients"
+          placeholder="Search recent recipients"
           value={searchQuery}
           onChangeText={setSearchQuery}
           style={styles.searchInput}
+          autoCapitalize="words"
         />
       </Card>
 
-      <Text style={styles.sectionTitle}>Recipients</Text>
+      <View style={styles.contactButtonContainer}>
+        <Button
+          title="Select from Contacts"
+          onPress={handlePickContact}
+          variant="outline"
+          style={styles.contactButton}
+        />
+      </View>
+
+      <Text style={styles.sectionTitle}>Recent Recipients</Text>
       <FlatList
         data={filteredRecipients}
         renderItem={renderRecipientItem}
@@ -82,14 +90,6 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation }) => {
         style={styles.list}
         contentContainerStyle={styles.listContent}
       />
-
-      <Card style={styles.newRecipientCard}>
-        <Input
-          placeholder="Enter new recipient name"
-          value={newRecipientName}
-          onChangeText={setNewRecipientName}
-        />
-      </Card>
 
       <Button
         title="Continue"
@@ -160,11 +160,31 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.xs,
     borderRadius: 4,
   },
-  newRecipientCard: {
-    marginTop: SPACING.md,
-    marginBottom: SPACING.lg,
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: SPACING.xl,
+  },
+  emptyStateText: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: '600',
+    color: COLORS.text,
+    textAlign: 'center',
+    marginBottom: SPACING.sm,
+  },
+  emptyStateSubtext: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
   },
   button: {
     marginTop: 'auto',
+  },
+  contactButtonContainer: {
+    marginBottom: SPACING.md,
+  },
+  contactButton: {
+    marginVertical: SPACING.sm,
   },
 });
