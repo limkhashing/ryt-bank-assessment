@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Text, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as Contacts from 'expo-contacts';
@@ -16,60 +16,10 @@ const RECENT_RECIPIENTS: Recipient[] = [
 export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) => {
   const { amount, note } = route.params;
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [recipients, setRecipients] = useState<Recipient[]>(RECENT_RECIPIENTS);
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    loadContacts();
-  }, []);
-
-  const loadContacts = async () => {
-    try {
-      const { status } = await Contacts.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert(
-          'Permission Required',
-          'Please grant contacts permission to select recipients from your contacts.'
-        );
-        setLoading(false);
-        return;
-      }
-
-      const { data } = await Contacts.getContactsAsync({
-        fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
-      });
-
-      if (data.length > 0) {
-        const contactRecipients: Recipient[] = data
-          .filter(contact => contact.name && contact.phoneNumbers?.[0]?.number)
-          .map(contact => ({
-            id: contact.id || `contact_${Date.now()}_${Math.random()}`,
-            name: contact.name || '',
-            phoneNumber: contact.phoneNumbers?.[0]?.number || '',
-          }));
-
-        // Combine recent recipients with contacts, removing duplicates
-        const allRecipients = [
-          ...RECENT_RECIPIENTS,
-          ...contactRecipients.filter(contact => 
-            !RECENT_RECIPIENTS.some(recent => recent.phoneNumber === contact.phoneNumber)
-          )
-        ];
-
-        setRecipients(allRecipients);
-      }
-    } catch (error) {
-      Alert.alert(
-        'Error',
-        'Failed to load contacts. Please try again.'
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filteredRecipients = recipients.filter(recipient =>
+  const filteredRecipients = RECENT_RECIPIENTS.filter(recipient =>
     recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery))
   );
@@ -77,6 +27,49 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
   const handleSelectRecipient = useCallback((recipient: Recipient) => {
     setSelectedRecipient(recipient);
   }, []);
+
+  const handlePickContact = async () => {
+    try {
+      setLoading(true);
+      
+      const { status } = await Contacts.requestPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert(
+          'Permission Required',
+          'Please grant contacts permission to select a recipient from your contacts.'
+        );
+        return;
+      }
+
+      // Open contact picker
+      const contact = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
+        pageSize: 1,
+        sort: Contacts.SortTypes.FirstName,
+      });
+
+      if (contact.data.length > 0) {
+        const selectedContact = contact.data[0];
+        if (selectedContact.name && selectedContact.phoneNumbers?.[0]?.number) {
+          const newRecipient: Recipient = {
+            id: selectedContact.id || `contact_${Date.now()}`,
+            name: selectedContact.name,
+            phoneNumber: selectedContact.phoneNumbers[0].number,
+          };
+          setSelectedRecipient(newRecipient);
+        } else {
+          Alert.alert('Invalid Contact', 'Please select a contact with a name and phone number.');
+        }
+      }
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        'Failed to access contacts. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleContinue = useCallback(() => {
     if (selectedRecipient) {
@@ -102,48 +95,42 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
           {item.phoneNumber}
         </Text>
       </View>
-      {item.isRecent && (
-        <Text style={styles.recentBadge}>Recent</Text>
-      )}
+      <Text style={styles.recentBadge}>Recent</Text>
     </TouchableOpacity>
   ), [selectedRecipient]);
 
   if (loading) {
-    return <Loading message="Loading contacts..." />;
+    return <Loading message="Accessing contacts..." />;
   }
 
   return (
     <View style={styles.container}>
       <Card style={styles.searchCard}>
         <Input
-          placeholder="Search by name or phone number"
+          placeholder="Search recent recipients"
           value={searchQuery}
           onChangeText={setSearchQuery}
           style={styles.searchInput}
         />
       </Card>
 
-      {recipients.length > 0 ? (
-        <>
-          <Text style={styles.sectionTitle}>
-            {searchQuery ? 'Search Results' : 'Recipients & Contacts'}
-          </Text>
-          <FlatList
-            data={filteredRecipients}
-            renderItem={renderRecipientItem}
-            keyExtractor={item => item.id}
-            style={styles.list}
-            contentContainerStyle={styles.listContent}
-          />
-        </>
-      ) : (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyStateText}>No contacts found</Text>
-          <Text style={styles.emptyStateSubtext}>
-            Your contacts will appear here once you grant permission
-          </Text>
-        </View>
-      )}
+      <View style={styles.contactButtonContainer}>
+        <Button
+          title="Select from Contacts"
+          onPress={handlePickContact}
+          variant="outline"
+          style={styles.contactButton}
+        />
+      </View>
+
+      <Text style={styles.sectionTitle}>Recent Recipients</Text>
+      <FlatList
+        data={filteredRecipients}
+        renderItem={renderRecipientItem}
+        keyExtractor={item => item.id}
+        style={styles.list}
+        contentContainerStyle={styles.listContent}
+      />
 
       <Button
         title="Continue"
@@ -234,5 +221,11 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 'auto',
+  },
+  contactButtonContainer: {
+    marginBottom: SPACING.md,
+  },
+  contactButton: {
+    marginVertical: SPACING.sm,
   },
 });
