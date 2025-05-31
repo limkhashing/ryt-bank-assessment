@@ -1,30 +1,77 @@
-import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity, Text, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import * as Contacts from 'expo-contacts';
 import { RootStackParamList, Recipient } from '../types';
 import { Button, Card, Input, Loading } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
-import { useAppSelector } from '../hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
 
-const MOCK_RECIPIENTS: Recipient[] = [
+const RECENT_RECIPIENTS: Recipient[] = [
   { id: '1', name: 'Luffy', phoneNumber: '+6016-593 5703', isRecent: true },
   { id: '2', name: 'Han Tham', phoneNumber: '+6012-345 6789', isRecent: true },
-  { id: '3', name: 'Melvin Ooi', phoneNumber: '+6019-876-543' },
 ];
 
 export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) => {
   const { amount, note } = route.params;
-
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [recipients] = useState<Recipient[]>(MOCK_RECIPIENTS);
+  const [loading, setLoading] = useState(true);
+  const [recipients, setRecipients] = useState<Recipient[]>(RECENT_RECIPIENTS);
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
-  const [newRecipientName, setNewRecipientName] = useState('');
+
+  useEffect(() => {
+    loadContacts();
+  }, []);
+
+  const loadContacts = async () => {
+    try {
+      const { status } = await Contacts.requestPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert(
+          'Permission Required',
+          'Please grant contacts permission to select recipients from your contacts.'
+        );
+        setLoading(false);
+        return;
+      }
+
+      const { data } = await Contacts.getContactsAsync({
+        fields: [Contacts.Fields.Name, Contacts.Fields.PhoneNumbers],
+      });
+
+      if (data.length > 0) {
+        const contactRecipients: Recipient[] = data
+          .filter(contact => contact.name && contact.phoneNumbers?.[0]?.number)
+          .map(contact => ({
+            id: contact.id || `contact_${Date.now()}_${Math.random()}`,
+            name: contact.name || '',
+            phoneNumber: contact.phoneNumbers?.[0]?.number || '',
+          }));
+
+        // Combine recent recipients with contacts, removing duplicates
+        const allRecipients = [
+          ...RECENT_RECIPIENTS,
+          ...contactRecipients.filter(contact => 
+            !RECENT_RECIPIENTS.some(recent => recent.phoneNumber === contact.phoneNumber)
+          )
+        ];
+
+        setRecipients(allRecipients);
+      }
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        'Failed to load contacts. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredRecipients = recipients.filter(recipient =>
-    recipient.name.toLowerCase().includes(searchQuery.toLowerCase())
+    recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery))
   );
 
   const handleSelectRecipient = useCallback((recipient: Recipient) => {
@@ -35,11 +82,11 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
     if (selectedRecipient) {
       navigation.navigate('ConfirmTransfer', {
         recipient: selectedRecipient,
-        amount: amount,
-        note: note,
+        amount,
+        note,
       });
     }
-  }, [navigation, selectedRecipient]);
+  }, [navigation, selectedRecipient, amount, note]);
 
   const renderRecipientItem = useCallback(({ item }: { item: Recipient }) => (
     <TouchableOpacity
@@ -62,36 +109,41 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
   ), [selectedRecipient]);
 
   if (loading) {
-    return <Loading message="Loading recipients..." />;
+    return <Loading message="Loading contacts..." />;
   }
 
   return (
     <View style={styles.container}>
       <Card style={styles.searchCard}>
         <Input
-          placeholder="Search recipients"
+          placeholder="Search by name or phone number"
           value={searchQuery}
           onChangeText={setSearchQuery}
           style={styles.searchInput}
         />
       </Card>
 
-      <Text style={styles.sectionTitle}>Recipients</Text>
-      <FlatList
-        data={filteredRecipients}
-        renderItem={renderRecipientItem}
-        keyExtractor={item => item.id}
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
-      />
-
-      <Card style={styles.newRecipientCard}>
-        <Input
-          placeholder="Enter new recipient name"
-          value={newRecipientName}
-          onChangeText={setNewRecipientName}
-        />
-      </Card>
+      {recipients.length > 0 ? (
+        <>
+          <Text style={styles.sectionTitle}>
+            {searchQuery ? 'Search Results' : 'Recipients & Contacts'}
+          </Text>
+          <FlatList
+            data={filteredRecipients}
+            renderItem={renderRecipientItem}
+            keyExtractor={item => item.id}
+            style={styles.list}
+            contentContainerStyle={styles.listContent}
+          />
+        </>
+      ) : (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyStateText}>No contacts found</Text>
+          <Text style={styles.emptyStateSubtext}>
+            Your contacts will appear here once you grant permission
+          </Text>
+        </View>
+      )}
 
       <Button
         title="Continue"
@@ -162,9 +214,23 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.xs,
     borderRadius: 4,
   },
-  newRecipientCard: {
-    marginTop: SPACING.md,
-    marginBottom: SPACING.lg,
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: SPACING.xl,
+  },
+  emptyStateText: {
+    fontSize: FONT_SIZES.lg,
+    fontWeight: '600',
+    color: COLORS.text,
+    textAlign: 'center',
+    marginBottom: SPACING.sm,
+  },
+  emptyStateSubtext: {
+    fontSize: FONT_SIZES.md,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
   },
   button: {
     marginTop: 'auto',
