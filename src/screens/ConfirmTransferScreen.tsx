@@ -116,7 +116,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
         <Button
           title="Confirm Transfer"
           onPress={handleConfirmTransfer}
-          style={[styles.confirmButton]}
+          style={styles.confirmButton}
         />
       </View>
     </View>
