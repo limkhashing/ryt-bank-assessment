@@ -50,7 +50,7 @@ export type RootStackParamList = {
     recipient: Recipient;
     note?: string;
   };
-  TransferStatus: {
+  Receipt: {
     transaction: Transaction;
   };
 };
