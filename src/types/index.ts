@@ -1,6 +1,7 @@
 export interface User {
   id: string;
   name: string;
+  phoneNumber: string;
   balance: number;
 }
 
@@ -8,7 +9,6 @@ export interface Recipient {
   id: string;
   name: string;
   phoneNumber?: string;
-  email?: string;
   isRecent?: boolean;
 }
 

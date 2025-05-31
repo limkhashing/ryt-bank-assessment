@@ -9,9 +9,9 @@ import { useAppSelector } from '../hooks';
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
 
 const MOCK_RECIPIENTS: Recipient[] = [
-  { id: '1', name: 'John Doe', phoneNumber: '+1234567890', isRecent: true },
-  { id: '2', name: 'Jane Smith', email: 'jane@example.com', isRecent: true },
-  { id: '3', name: 'Bob Wilson', phoneNumber: '+1987654321' },
+  { id: '1', name: 'Kha Shing', phoneNumber: '+6016-593 5703', isRecent: true },
+  { id: '2', name: 'Han Tham', phoneNumber: '+6012-345 6789', isRecent: true },
+  { id: '3', name: 'Melvin Ooi', phoneNumber: '+6019-876-543' },
 ];
 
 export const SelectRecipientScreen: React.FC<Props> = ({ navigation }) => {
