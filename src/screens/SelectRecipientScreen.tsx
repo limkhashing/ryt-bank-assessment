@@ -14,7 +14,9 @@ const MOCK_RECIPIENTS: Recipient[] = [
   { id: '3', name: 'Melvin Ooi', phoneNumber: '+6019-876-543' },
 ];
 
-export const SelectRecipientScreen: React.FC<Props> = ({ navigation }) => {
+export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) => {
+  const { amount, note } = route.params;
+
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [recipients] = useState<Recipient[]>(MOCK_RECIPIENTS);
@@ -33,8 +35,8 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation }) => {
     if (selectedRecipient) {
       navigation.navigate('ConfirmTransfer', {
         recipient: selectedRecipient,
-        amount: 0, // This will be updated with the actual amount
-        note: '',
+        amount: amount,
+        note: note,
       });
     }
   }, [navigation, selectedRecipient]);

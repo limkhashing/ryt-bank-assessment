@@ -47,7 +47,10 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
   const handleContinue = () => {
     const numericAmount = parseFloat(amount);
     if (!validateAmount(numericAmount)) return;
-    navigation.navigate('SelectRecipient');
+    navigation.navigate('SelectRecipient', {
+        amount: numericAmount,
+        note: note,
+      });
   };
 
   return (
