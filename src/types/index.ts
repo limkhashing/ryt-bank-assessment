@@ -41,7 +41,10 @@ export interface ApiResponse<T> {
 
 export type RootStackParamList = {
   Transfer: undefined;
-  SelectRecipient: undefined;
+  SelectRecipient: {
+    amount: number;
+    note?: string;
+  };
   ConfirmTransfer: {
     amount: number;
     recipient: Recipient;
