@@ -9,10 +9,9 @@ const mockUser: User = {
 };
 
 const mockRecipients: Recipient[] = [
-  { id: '1', name: 'Alice Johnson', phoneNumber: '+1234567890', isRecent: true },
-  { id: '2', name: 'Bob Wilson', phoneNumber: '+1234567890', isRecent: true },
-  { id: '3', name: 'Carol Brown', phoneNumber: '+1987654321' },
-  { id: '4', name: 'David Lee', phoneNumber: '+1234567890' },
+  { id: '1', name: 'Emma Watson', phoneNumber: '+6016-501 7727', isRecent: true },
+  { id: '2', name: 'Elon Musk', phoneNumber: '+6012-320 3035', isRecent: true },
+  { id: '3', name: 'Uzumaki Naruto', phoneNumber: '+6013-2612 329' },
 ];
 
 class TransferService {
