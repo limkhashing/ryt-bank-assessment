@@ -57,6 +57,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
       // Navigate to status screen
       navigation.replace('TransferStatus', { transaction });
     } catch (error) {
+      console.error('Transfer error:', error);
       Alert.alert(
         'Transfer Failed',
         'Something went wrong. Please try again.'
