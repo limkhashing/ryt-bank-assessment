@@ -6,9 +6,9 @@ import { Button, Card } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { formatCurrency, formatDate } from '../utils';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'TransferStatus'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Receipt'>;
 
-export const TransferStatusScreen: React.FC<Props> = ({ navigation, route }) => {
+export const ReceiptScreen: React.FC<Props> = ({ navigation, route }) => {
   const { transaction } = route.params;
   const scaleAnim = React.useRef(new Animated.Value(0)).current;
 

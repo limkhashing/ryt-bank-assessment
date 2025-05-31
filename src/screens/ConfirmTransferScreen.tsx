@@ -54,8 +54,8 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
         dispatch(updateBalance(currentUser.balance - amount));
       }
 
-      // Navigate to status screen
-      navigation.replace('TransferStatus', { transaction });
+      // Navigate to receipt screen
+      navigation.replace('Receipt', { transaction });
     } catch (error) {
       console.error('Transfer error:', error);
       Alert.alert(
