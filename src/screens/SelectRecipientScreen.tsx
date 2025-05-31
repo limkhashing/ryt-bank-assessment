@@ -52,7 +52,7 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
       <View style={styles.recipientInfo}>
         <Text style={styles.recipientName}>{item.name}</Text>
         <Text style={styles.recipientDetail}>
-          {item.phoneNumber || item.email}
+          {item.phoneNumber}
         </Text>
       </View>
       {item.isRecent && (
