@@ -5,10 +5,11 @@ import { RootStackParamList, Transaction } from '../types';
 import { Button, Card, Loading } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { formatCurrency, generateTransactionId, simulateApiCall } from '../utils';
+import { formatCurrency, generateTransactionId } from '../utils';
 import { biometricService } from '../services/BiometricService';
 import { addTransaction } from '../store';
 import { updateBalance } from '../store';
+import { transferService } from "../services";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ConfirmTransfer'>;
 
@@ -43,7 +44,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
       };
 
       // Simulate API call
-      await simulateApiCall(transaction);
+      await transferService.processTransfer(transaction);
 
       // Update transaction status
       transaction.status = 'completed';
