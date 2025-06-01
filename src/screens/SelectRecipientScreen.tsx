@@ -1,23 +1,46 @@
-import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Text } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Recipient } from '../types';
 import { Button, Card, Input } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
+import { transferService } from '../services';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
-
-const RECENT_RECIPIENTS: Recipient[] = [
-  { id: '1', name: 'Luffy', phoneNumber: '+6016-593 5703', isRecent: true },
-  { id: '2', name: 'Han Tham', phoneNumber: '+6012-345 6789', isRecent: true },
-];
 
 export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) => {
   const { amount, note } = route.params;
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRecipient, setSelectedRecipient] = useState<Recipient | null>(null);
-  
-  const filteredRecipients = RECENT_RECIPIENTS.filter(recipient =>
+  const [recipients, setRecipients] = useState<Recipient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchRecipients = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await transferService.getRecipients();
+      if (response.success && response.data) {
+        setRecipients(response.data);
+      } else {
+        setError(response.error || 'Failed to fetch recipients');
+      }
+    } catch (error) {
+      console.error('Error fetching recipients:', error);
+      setError(error instanceof Error ? error.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchRecipients().then(
+        // no operations
+    );
+  }, [fetchRecipients]);
+
+  const filteredRecipients = recipients.filter(recipient =>
     recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery))
   );
@@ -57,7 +80,7 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
           {item.phoneNumber}
         </Text>
       </View>
-      <Text style={styles.recentBadge}>Recent</Text>
+      {item.isRecent && <Text style={styles.recentBadge}>Recent</Text>}
     </TouchableOpacity>
   ), [selectedRecipient]);
 
@@ -83,13 +106,37 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
       </View>
 
       <Text style={styles.sectionTitle}>Recent Recipients</Text>
-      <FlatList
-        data={filteredRecipients}
-        renderItem={renderRecipientItem}
-        keyExtractor={item => item.id}
-        style={styles.list}
-        contentContainerStyle={styles.listContent}
-      />
+
+      {loading ? (
+        <View style={styles.emptyState}>
+          <ActivityIndicator size="large" color={COLORS.primary} />
+          <Text style={styles.emptyStateSubtext}>Loading recipients...</Text>
+        </View>
+      ) : error ? (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyStateText}>Couldn't load recipients</Text>
+          <Text style={styles.emptyStateSubtext}>{error}</Text>
+          <Button
+            title="Retry"
+            onPress={fetchRecipients}
+            style={styles.retryButton}
+            variant="outline"
+          />
+        </View>
+      ) : filteredRecipients.length === 0 ? (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyStateText}>No recipients found</Text>
+          <Text style={styles.emptyStateSubtext}>Try a different search or add a new contact</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={filteredRecipients}
+          renderItem={renderRecipientItem}
+          keyExtractor={item => item.id}
+          style={styles.list}
+          contentContainerStyle={styles.listContent}
+        />
+      )}
 
       <Button
         title="Continue"
@@ -186,5 +233,9 @@ const styles = StyleSheet.create({
   },
   contactButton: {
     marginVertical: SPACING.sm,
+  },
+  retryButton: {
+    marginTop: SPACING.lg,
+    minWidth: 120,
   },
 });
