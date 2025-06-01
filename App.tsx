@@ -13,7 +13,6 @@ import {
 } from './src/screens';
 import { COLORS } from './src/constants';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -59,7 +58,7 @@ export default function App() {
             component={ReceiptScreen}
             options={{
               title: 'Receipt',
-              headerLeft: () => null, // Disable back button
+              headerBackVisible: false,
             }}
           />
         </Stack.Navigator>
@@ -68,12 +67,3 @@ export default function App() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Transaction } from '../types';
+import { RootStackParamList, Transaction, TransactionStatus } from '../types';
 import { Button, Card, Loading } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { formatCurrency, generateTransactionId, simulateApiCall } from '../utils';
+import { formatCurrency, generateTransactionId } from '../utils';
 import { biometricService } from '../services/BiometricService';
 import { addTransaction } from '../store';
 import { updateBalance } from '../store';
+import { transferService } from "../services";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ConfirmTransfer'>;
 
@@ -39,18 +40,23 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
         recipient: recipient,
         date: new Date().toISOString(),
         note: note,
-        status: 'pending',
+        status: TransactionStatus.PENDING,
       };
 
       // Simulate API call
-      await simulateApiCall(transaction);
+      const result = await transferService.processTransfer(transaction);
 
-      // Update transaction status
-      transaction.status = 'completed';
+      // Update transaction status based on API response
+      if (result.success && result.data) {
+        transaction.status = result.data.status;
+      } else {
+        transaction.status = TransactionStatus.FAILED;
+      }
 
       // Update Redux state
       dispatch(addTransaction(transaction));
-      if (currentUser) {
+      // Only deduct balance if transfer was successful
+      if (currentUser && transaction.status === TransactionStatus.COMPLETED) {
         dispatch(updateBalance(currentUser.balance - amount));
       }
 
