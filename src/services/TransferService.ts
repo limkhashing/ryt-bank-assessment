@@ -1,4 +1,4 @@
-import { User, Recipient, Transaction, ApiResponse } from '../types';
+import { User, Recipient, Transaction, ApiResponse, TransactionStatus } from '../types';
 
 class TransferService {
   async getCurrentUser(): Promise<ApiResponse<User>> {
@@ -34,7 +34,7 @@ class TransferService {
       // Prepare transaction with status before simulation
       const transactionWithStatus = {
         ...transaction,
-        status: Math.random() > 0.2 ? 'completed' : 'failed', // 80% success rate
+        status: Math.random() > 0.2 ? TransactionStatus.COMPLETED : TransactionStatus.FAILED, // 80% success rate
       };
 
       // Use the class method to simulate API call

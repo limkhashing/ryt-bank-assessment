@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Animated, BackHandler } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
+import { RootStackParamList, TransactionStatus } from '../types';
 import { Button, Card } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { formatCurrency, formatDate } from '../utils';
@@ -40,9 +40,9 @@ export const ReceiptScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const getStatusColor = () => {
     switch (transaction.status) {
-      case 'completed':
+      case TransactionStatus.COMPLETED:
         return COLORS.success;
-      case 'failed':
+      case TransactionStatus.FAILED:
         return COLORS.error;
       default:
         return COLORS.primary;
@@ -51,9 +51,9 @@ export const ReceiptScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const getStatusMessage = () => {
     switch (transaction.status) {
-      case 'completed':
+      case TransactionStatus.COMPLETED:
         return 'Transfer Successful!';
-      case 'failed':
+      case TransactionStatus.FAILED:
         return 'Transfer Failed';
       default:
         return 'Transfer Pending';
@@ -66,7 +66,7 @@ export const ReceiptScreen: React.FC<Props> = ({ navigation, route }) => {
         <Card style={styles.statusCard}>
           <View style={[styles.statusIcon, { backgroundColor: getStatusColor() }]}>
             <Text style={styles.statusEmoji}>
-              {transaction.status === 'completed' ? '✓' : '×'}
+              {transaction.status === TransactionStatus.COMPLETED ? '✓' : '×'}
             </Text>
           </View>
 

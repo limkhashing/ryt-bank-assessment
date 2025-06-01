@@ -12,13 +12,19 @@ export interface Recipient {
   isRecent?: boolean;
 }
 
+export enum TransactionStatus {
+  PENDING = 'pending',
+  COMPLETED = 'completed',
+  FAILED = 'failed'
+}
+
 export interface Transaction {
   id: string;
   amount: number;
   recipient: Recipient;
   date: string;
   note?: string;
-  status: 'pending' | 'completed' | 'failed';
+  status: TransactionStatus;
 }
 
 export interface TransferFormData {
