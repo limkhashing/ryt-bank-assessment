@@ -1,23 +1,10 @@
 import { User, Recipient, Transaction, ApiResponse } from '../types';
-import { simulateApiCall } from '../utils';
-
-// Mock data
-const mockUser: User = {
-  id: 'user1',
-  name: 'John Smith',
-  balance: 5000.00,
-};
-
-const mockRecipients: Recipient[] = [
-  { id: '1', name: 'Emma Watson', phoneNumber: '+6016-501 7727', isRecent: true },
-  { id: '2', name: 'Elon Musk', phoneNumber: '+6012-320 3035', isRecent: true },
-  { id: '3', name: 'Uzumaki Naruto', phoneNumber: '+6013-2612 329' },
-];
 
 class TransferService {
   async getCurrentUser(): Promise<ApiResponse<User>> {
     try {
-      const user = await simulateApiCall(mockUser);
+      const mockUser = require('../data/mockUser.json');
+      const user = await this.simulateApiCall(mockUser);
       return { success: true, data: user };
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -30,7 +17,8 @@ class TransferService {
 
   async getRecipients(): Promise<ApiResponse<Recipient[]>> {
     try {
-      const recipients = await simulateApiCall(mockRecipients);
+      const mockRecipients = require('../data/mockRecipients.json');
+      const recipients = await this.simulateApiCall(mockRecipients);
       return { success: true, data: recipients };
     } catch (error) {
       console.error('Error fetching recipients:', error);
@@ -43,11 +31,14 @@ class TransferService {
 
   async processTransfer(transaction: Transaction): Promise<ApiResponse<Transaction>> {
     try {
-      // Simulate backend validation and processing
-      const processedTransaction = await simulateApiCall({
+      // Prepare transaction with status before simulation
+      const transactionWithStatus = {
         ...transaction,
-        status: Math.random() > 0.1 ? 'completed' : 'failed', // 90% success rate
-      });
+        status: Math.random() > 0.2 ? 'completed' : 'failed', // 80% success rate
+      };
+
+      // Use the class method to simulate API call
+      const processedTransaction = await this.simulateApiCall(transactionWithStatus);
 
       return { success: true, data: processedTransaction };
     } catch (error) {
@@ -57,6 +48,18 @@ class TransferService {
         error: error instanceof Error ? error.message : 'Failed to process transfer',
       };
     }
+  }
+
+  simulateApiCall = async <T>(data: T): Promise<T> => {
+    const delay = Math.floor(Math.random() * 1000) + 500; // Random delay between 500-1500ms
+
+    // Randomly decide between success and failure (80% success rate)
+    if (Math.random() > 0.8) {
+      await new Promise(resolve => setTimeout(resolve, delay));
+      throw new Error('Network error');
+    }
+
+    return new Promise(resolve => setTimeout(() => resolve(data), delay));
   }
 }
 
