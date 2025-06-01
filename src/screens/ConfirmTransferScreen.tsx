@@ -55,7 +55,8 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
 
       // Update Redux state
       dispatch(addTransaction(transaction));
-      if (currentUser) {
+      // Only deduct balance if transfer was successful
+      if (currentUser && transaction.status === TransactionStatus.COMPLETED) {
         dispatch(updateBalance(currentUser.balance - amount));
       }
 
