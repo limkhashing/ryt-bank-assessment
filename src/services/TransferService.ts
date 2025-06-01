@@ -31,13 +31,14 @@ class TransferService {
 
   async processTransfer(transaction: Transaction): Promise<ApiResponse<Transaction>> {
     try {
-      // Prepare transaction with status before simulation
+      // Prepare mocked transaction response with status
+      const isTransactionSuccess = true;
       const transactionWithStatus = {
         ...transaction,
-        status: Math.random() > 0.2 ? TransactionStatus.COMPLETED : TransactionStatus.FAILED, // 80% success rate
+        status: isTransactionSuccess ? TransactionStatus.COMPLETED : TransactionStatus.FAILED,
       };
 
-      // Use the class method to simulate API call
+      // Simulate API call
       const processedTransaction = await this.simulateApiCall(transactionWithStatus);
 
       return { success: true, data: processedTransaction };
@@ -53,8 +54,8 @@ class TransferService {
   simulateApiCall = async <T>(data: T): Promise<T> => {
     const delay = Math.floor(Math.random() * 1000) + 500; // Random delay between 500-1500ms
 
-    // Randomly decide between success and failure (80% success rate)
-    if (Math.random() > 0.8) {
+    const isRequestSuccess = false;
+    if (!isRequestSuccess) {
       await new Promise(resolve => setTimeout(resolve, delay));
       throw new Error('Network error');
     }
