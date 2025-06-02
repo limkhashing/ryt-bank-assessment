@@ -5,7 +5,7 @@ import { RootStackParamList, Transaction, TransactionStatus } from '../types';
 import { Button, Card, Loading } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { formatCurrency, generateTransactionId } from '../utils';
+import { formatCurrency, generateTransactionId, Logger } from '../utils';
 import { biometricService } from '../services/BiometricService';
 import { addTransaction } from '../store';
 import { updateBalance } from '../store';
@@ -63,7 +63,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
       // Navigate to receipt screen
       navigation.replace('Receipt', { transaction });
     } catch (error) {
-      console.error('Transfer error:', error);
+      Logger.error('Transfer error', error);
       Alert.alert(
         'Transfer Failed',
         'Something went wrong. Please try again.'
