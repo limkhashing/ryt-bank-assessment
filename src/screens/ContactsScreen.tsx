@@ -5,6 +5,7 @@ import * as Contacts from 'expo-contacts';
 import { RootStackParamList, Recipient } from '../types';
 import { Button, Card, Input, Loading } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
+import { Logger } from '../utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Contacts'>;
 
@@ -58,7 +59,7 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
 
       setContacts(formattedContacts);
     } catch (error) {
-      console.error('Error loading contacts:', error);
+      Logger.error('Error loading contacts', error);
     }
   };
 
