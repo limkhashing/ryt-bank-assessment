@@ -19,10 +19,10 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
   const handleAmountChange = useCallback((text: string) => {
     // Remove all non-numeric characters
     const numericValue = text.replace(/[^0-9]/g, '');
-    
+
     // Convert to number with 2 decimal places
     const numberValue = parseInt(numericValue || '0', 10) / 100;
-    
+
     // Validate amount
     if (numberValue > 999999.99) {
       setError('Amount cannot exceed RM999,999.99');
