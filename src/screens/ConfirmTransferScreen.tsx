@@ -6,7 +6,6 @@ import { Button, Card, Loading } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { formatCurrency, generateTransactionId, Logger } from '../utils';
-import { biometricService } from '../services/BiometricService';
 import { addTransaction } from '../store';
 import { updateBalance } from '../store';
 import { transferService } from "../services";
