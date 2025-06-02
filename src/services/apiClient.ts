@@ -72,25 +72,20 @@ export const simulateApiCall = async <T>(endpoint: string, mockData: T, config?:
   // Simulate API call by delaying the response
   await new Promise(resolve => setTimeout(resolve, delay));
 
-  try {
-    // For simulation, we create a fake response from the mock data
-    // In a real implementation this would be replaced with actual API calls
+  // For simulation, we create a fake response from the mock data
+  // In a real implementation this would be replaced with actual API calls
 
-    // Simulate network success/error using shouldSucceed boolean flag
-    const shouldSucceed = true
+  // Simulate network success/error using shouldSucceed boolean flag
+  const shouldSucceed = true
 
-    if (!shouldSucceed) {
-      throw new Error('Simulated API error');
-    }
-
-    // Log the simulated API call
-    Logger.info(`[API Simulation] ${config?.method || 'GET'} ${endpoint}`, { delay });
-
-    return mockData;
-  } catch (error) {
-    Logger.error(`[API Simulation] Error for ${endpoint}:`, error);
-    throw error;
+  if (!shouldSucceed) {
+    throw new Error('Simulated API error');
   }
+
+  // Log the simulated API call
+  Logger.info(`[API Simulation] ${config?.method || 'GET'} ${endpoint}`, { delay });
+
+  return mockData;
 };
 
 export default apiClient;
