@@ -1,66 +1,16 @@
-export interface User {
-  id: string;
-  name: string;
-  phoneNumber: string;
-  balance: number;
-}
+/**
+ * Central export file for all application type definitions
+ * Re-exports all types from domain-specific files
+ */
 
-export interface Recipient {
-  id: string;
-  name: string;
-  phoneNumber?: string;
-  isRecent?: boolean;
-}
+// User-related types
+export * from './user';
 
-export enum TransactionStatus {
-  PENDING = 'pending',
-  COMPLETED = 'completed',
-  FAILED = 'failed'
-}
+// Transaction-related types
+export * from './transaction';
 
-export interface Transaction {
-  id: string;
-  amount: number;
-  recipient: Recipient;
-  date: string;
-  note?: string;
-  status: TransactionStatus;
-}
+// Navigation-related types
+export * from './navigation';
 
-export interface TransferFormData {
-  recipientId?: string;
-  recipientName?: string;
-  amount: number;
-  note?: string;
-}
-
-export interface BiometricAuthResult {
-  success: boolean;
-  error?: string;
-}
-
-export interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: string;
-}
-
-export type RootStackParamList = {
-  Transfer: undefined;
-  SelectRecipient: {
-    amount: number;
-    note?: string;
-  };
-  Contacts: {
-    amount: number;
-    note?: string;
-  };
-  ConfirmTransfer: {
-    amount: number;
-    recipient: Recipient;
-    note?: string;
-  };
-  Receipt: {
-    transaction: Transaction;
-  };
-};
+// API and service-related types
+export * from './api';
