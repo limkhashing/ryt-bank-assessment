@@ -7,7 +7,7 @@ src/
   ├── services/     # API and biometric services
   ├── store/        # Redux store and slices
   ├── types/        # TypeScript interfaces
-  │   ├── api.ts      # API and service-related types
+  │   ├── apiClient.ts      # API and service-related types
   │   ├── navigation.ts # Navigation-related types
   │   ├── transaction.ts # Transaction-related types
   │   ├── user.ts      # User and recipient-related types
