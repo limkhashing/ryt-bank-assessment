@@ -1,12 +1,17 @@
 import { User, Recipient, Transaction, ApiResponse, TransactionStatus } from '../types';
-import { Logger } from '../utils';
+import { Logger } from '../utils/Logger';
+import apiClient, { simulateApiCall } from './api';
 
 class TransferService {
   async getCurrentUser(): Promise<ApiResponse<User>> {
     try {
-      // TODO change this to actual API call
+      // Simulate API call using Axios
+      // In production, this would be replaced with a real API call:
+      // const response = await apiClient.get('/users/current');
+      // return { success: true, data: response.data };
+
       const mockUser = require('../data/mockUser.json');
-      const user = await this.simulateApiCall(mockUser);
+      const user = await simulateApiCall('/users/current', mockUser, { method: 'GET' });
       return { success: true, data: user };
     } catch (error) {
       Logger.error('Error fetching user data', error);
@@ -19,9 +24,10 @@ class TransferService {
 
   async getRecipients(): Promise<ApiResponse<Recipient[]>> {
     try {
-      // TODO change this to actual API call
+      // Simulate API call using Axios
+      // In production: const response = await apiClient.get('/recipients');
       const mockRecipients = require('../data/mockRecipients.json');
-      const recipients = await this.simulateApiCall(mockRecipients);
+      const recipients = await simulateApiCall('/recipients', mockRecipients, { method: 'GET' });
       return { success: true, data: recipients };
     } catch (error) {
       Logger.error('Error fetching recipients', error);
@@ -34,15 +40,18 @@ class TransferService {
 
   async processTransfer(transaction: Transaction): Promise<ApiResponse<Transaction>> {
     try {
-      // Prepare mocked transaction response with status
-      const isTransactionSuccess = true;
+      // Prepare transaction data
       const transactionWithStatus = {
         ...transaction,
-        status: isTransactionSuccess ? TransactionStatus.COMPLETED : TransactionStatus.FAILED,
+        status: TransactionStatus.PENDING,
       };
 
-      // TODO change this to actual API call
-      const processedTransaction = await this.simulateApiCall(transactionWithStatus);
+      // Simulate API call using Axios
+      // In production: const response = await apiClient.post('/transactions', transactionWithStatus);
+      const processedTransaction = await simulateApiCall('/transactions', 
+        { ...transactionWithStatus, status: TransactionStatus.COMPLETED },
+        { method: 'POST' }
+      );
 
       return { success: true, data: processedTransaction };
     } catch (error) {
@@ -52,19 +61,6 @@ class TransferService {
         error: error instanceof Error ? error.message : 'Failed to process transfer',
       };
     }
-  }
-
-  simulateApiCall = async <T>(data: T): Promise<T> => {
-    const delay = Math.floor(Math.random() * 1000) + 500; // Random delay between 500-1500ms
-
-    // Simulate network success/error using isRequestSuccess boolean flag
-    const isRequestSuccess = false;
-    if (!isRequestSuccess) {
-      await new Promise(resolve => setTimeout(resolve, delay));
-      throw new Error('Network error');
-    }
-
-    return new Promise(resolve => setTimeout(() => resolve(data), delay));
   }
 }
 

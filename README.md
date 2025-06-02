@@ -18,6 +18,7 @@ A modern and secure payment transfer application built with React Native, TypeSc
 - TypeScript
 - Redux Toolkit for state management
 - React Navigation for routing
+- Axios for API requests
 - React Native Biometrics
 - React Native Elements UI library
 - Jest & React Native Testing Library
