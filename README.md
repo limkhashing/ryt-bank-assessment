@@ -18,6 +18,7 @@ A modern and secure payment transfer application built with React Native, TypeSc
 - TypeScript
 - Redux Toolkit for state management
 - React Navigation for routing
+- Axios for API requests
 - React Native Biometrics
 - React Native Elements UI library
 - Jest & React Native Testing Library
@@ -46,17 +47,20 @@ src/
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/ryt-transfer.git
    ```
 
 2. Install dependencies:
+
    ```bash
    cd ryt-transfer
    npm install
    ```
 
 3. Start the development server:
+
    ```bash
    npm start
    ```
@@ -71,19 +75,23 @@ src/
 ## Design Decisions
 
 ### State Management
+
 - Using Redux Toolkit for its simplified setup and built-in immutability helpers
 - Centralized store for user data, transactions, and app state
 
 ### Authentication
+
 - Biometric authentication for secure transfers
 - Fallback to PIN/passcode when biometrics unavailable
 
 ### Performance
+
 - Optimized list rendering with React.memo and PureComponent
 - Debounced search inputs
 - Lazy loading for better initial load time
 
 ### UI/UX
+
 - Consistent spacing and typography system
 - Smooth animations for better user experience
 - Clear error messages and loading states
