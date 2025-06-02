@@ -5,7 +5,7 @@ import { RootStackParamList, Recipient } from '../types';
 import { Button, Card, Input } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { transferService } from '../services';
-import { Logger } from '../utils';
+import { Logger } from '../utils/Logger';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
 
