@@ -1,5 +1,6 @@
 import ReactNativeBiometrics, { BiometryTypes } from 'react-native-biometrics';
 import { BiometricAuthResult } from '../types';
+import { Logger } from '../utils';
 
 const rnBiometrics = new ReactNativeBiometrics();
 
@@ -8,7 +9,8 @@ export const BiometricService = {
     try {
       const { available, biometryType } = await rnBiometrics.isSensorAvailable();
       return available && (biometryType === BiometryTypes.TouchID || biometryType === BiometryTypes.FaceID || biometryType === BiometryTypes.Biometrics);
-    } catch {
+    } catch (error) {
+      Logger.error('Failed to check biometric availability', error);
       return false;
     }
   },
@@ -22,7 +24,7 @@ export const BiometricService = {
 
       return { success };
     } catch (error) {
-      console.error('Biometric authentication failed:', error);
+      Logger.error('Biometric authentication failed', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Authentication failed',

@@ -5,6 +5,7 @@ import { RootStackParamList, Recipient } from '../types';
 import { Button, Card, Input } from '../components';
 import { COLORS, SPACING, FONT_SIZES } from '../constants';
 import { transferService } from '../services';
+import { Logger } from '../utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
 
@@ -27,7 +28,7 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
         setError(response.error || 'Failed to fetch recipients');
       }
     } catch (error) {
-      console.error('Error fetching recipients:', error);
+      Logger.error('Error fetching recipients', error);
       setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setLoading(false);
