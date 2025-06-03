@@ -21,7 +21,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
   const [loading, setLoading] = useState(false);
   const [showPinInput, setShowPinInput] = useState(false);
   const [pin, setPin] = useState('');
-  const PIN_CODE = '1234'; // In a real app, this should be stored securely and cross checked with backend
+  const PIN_CODE = '123456'; // In a real app, this should be stored securely and cross checked with backend
 
   const handleAuthentication = async () => {
     try {
@@ -33,22 +33,26 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
       if (biometricResult.success) {
         // Biometric authentication successful
         await processTransfer();
-      } else if (biometricResult.error === 'BIOMETRIC_NOT_AVAILABLE') {
+        return
+      }
+
+      if (biometricResult.error === 'BIOMETRIC_NOT_AVAILABLE') {
         // Fallback to PIN authentication
         setShowPinInput(true);
         setLoading(false);
-      } else {
-        // Biometric authentication failed
-        Alert.alert(
+        return
+      }
+
+      // Biometric authentication failed
+      Alert.alert(
           'Authentication Failed',
           'Biometric authentication failed. Please try again or use PIN.',
           [
             { text: 'Try Again', onPress: () => handleAuthentication() },
             { text: 'Use PIN', onPress: () => setShowPinInput(true) }
           ]
-        );
-        setLoading(false);
-      }
+      );
+      setLoading(false);
     } catch (error) {
       Logger.error('Authentication error', error);
       setLoading(false);
@@ -121,17 +125,19 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
             style={styles.pinInput}
             value={pin}
             onChangeText={setPin}
-            placeholder="Enter your PIN"
+            placeholder="Enter your 6 digit PIN"
             keyboardType="numeric"
             secureTextEntry
-            maxLength={4}
+            maxLength={6}
           />
-          <Button title="Submit PIN" onPress={handlePinSubmit} />
-          <Button 
-            title="Cancel" 
-            onPress={() => navigation.goBack()} 
-            variant="secondary"
-          />
+          <View style={styles.buttonContainer}>
+            <Button title="Submit PIN" onPress={handlePinSubmit} />
+            <Button
+                title="Cancel"
+                onPress={() => navigation.goBack()}
+                variant="outline"
+            />
+          </View>
         </Card>
       </View>
     );
@@ -164,7 +170,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
           <Button 
             title="Cancel" 
             onPress={() => navigation.goBack()} 
-            variant="secondary"
+            variant="outline"
           />
         </View>
       </Card>
@@ -209,7 +215,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.md,
   },
   buttonContainer: {
-    marginTop: SPACING.large,
+    marginTop: SPACING.md,
     gap: SPACING.sm,
   },
   cancelButton: {
