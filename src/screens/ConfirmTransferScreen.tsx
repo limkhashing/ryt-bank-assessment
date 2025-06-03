@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert, TextInput } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Transaction, TransactionStatus } from '../types';
 import { Button, Card, Loading } from '../components';
@@ -10,6 +10,7 @@ import { Logger } from '../utils/Logger';
 import { addTransaction } from '../store';
 import { updateBalance } from '../store';
 import { transferService } from "../services";
+import { biometricService } from "../services/BiometricService";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ConfirmTransfer'>;
 
@@ -18,21 +19,55 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector(state => state.user);
   const [loading, setLoading] = useState(false);
+  const [showPinInput, setShowPinInput] = useState(false);
+  const [pin, setPin] = useState('');
+  const PIN_CODE = '1234'; // In a real app, this should be stored securely and cross checked with backend
 
-  const handleConfirmTransfer = async () => {
+  const handleAuthentication = async () => {
     try {
       setLoading(true);
+      const biometricResult = await biometricService.authenticate(
+        'Authenticate to confirm transfer'
+      );
 
-      // Biometric authentication
-      // const biometricResult = await biometricService.authenticate(
-      //   'Authenticate to confirm transfer'
-      // );
+      if (biometricResult.success) {
+        // Biometric authentication successful
+        await processTransfer();
+      } else if (biometricResult.error === 'BIOMETRIC_NOT_AVAILABLE') {
+        // Fallback to PIN authentication
+        setShowPinInput(true);
+        setLoading(false);
+      } else {
+        // Biometric authentication failed
+        Alert.alert(
+          'Authentication Failed',
+          'Biometric authentication failed. Please try again or use PIN.',
+          [
+            { text: 'Try Again', onPress: () => handleAuthentication() },
+            { text: 'Use PIN', onPress: () => setShowPinInput(true) }
+          ]
+        );
+        setLoading(false);
+      }
+    } catch (error) {
+      Logger.error('Authentication error', error);
+      setLoading(false);
+      Alert.alert('Error', 'Authentication failed. Please try again.');
+    }
+  };
 
-      // if (!biometricResult.success) {
-      //   Alert.alert('Authentication Failed', biometricResult.error || 'Please try again');
-      //   return;
-      // }
+  const handlePinSubmit = async () => {
+    if (pin === PIN_CODE) {
+      await processTransfer();
+    } else {
+      Alert.alert('Error', 'Incorrect PIN. Please try again.');
+      setPin('');
+    }
+  };
 
+  const processTransfer = async () => {
+    try {
+      setLoading(true);
       // Create transaction object
       const transaction: Transaction = {
         id: generateTransactionId(),
@@ -77,6 +112,31 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
     return <Loading message="Processing transfer..." />;
   }
 
+  if (showPinInput) {
+    return (
+      <View style={styles.container}>
+        <Card style={styles.detailsCard}>
+          <Text style={styles.title}>Enter PIN</Text>
+          <TextInput
+            style={styles.pinInput}
+            value={pin}
+            onChangeText={setPin}
+            placeholder="Enter your PIN"
+            keyboardType="numeric"
+            secureTextEntry
+            maxLength={4}
+          />
+          <Button title="Submit PIN" onPress={handlePinSubmit} />
+          <Button 
+            title="Cancel" 
+            onPress={() => navigation.goBack()} 
+            variant="secondary"
+          />
+        </Card>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Card style={styles.detailsCard}>
@@ -99,32 +159,15 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
           </View>
         )}
 
-        <View style={styles.divider} />
-
-        <View style={styles.row}>
-          <Text style={styles.label}>Balance After Transfer:</Text>
-          <Text style={[
-            styles.value,
-            { color: COLORS.primary }
-          ]}>
-            {formatCurrency((currentUser?.balance || 0) - amount)}
-          </Text>
+        <View style={styles.buttonContainer}>
+          <Button title="Confirm Transfer" onPress={handleAuthentication} />
+          <Button 
+            title="Cancel" 
+            onPress={() => navigation.goBack()} 
+            variant="secondary"
+          />
         </View>
       </Card>
-
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Cancel"
-          variant="outline"
-          onPress={() => navigation.goBack()}
-          style={styles.cancelButton}
-        />
-        <Button
-          title="Confirm Transfer"
-          onPress={handleConfirmTransfer}
-          style={styles.confirmButton}
-        />
-      </View>
     </View>
   );
 };
@@ -166,9 +209,8 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.md,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 'auto',
+    marginTop: SPACING.large,
+    gap: SPACING.sm,
   },
   cancelButton: {
     flex: 0.5,
@@ -177,5 +219,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.success,
     marginHorizontal: SPACING.xs,
+  },
+  pinInput: {
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: 8,
+    padding: SPACING.md,
+    marginVertical: SPACING.md,
+    fontSize: FONT_SIZES.md,
+    width: '100%',
   },
 });
