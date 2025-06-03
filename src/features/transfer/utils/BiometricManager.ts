@@ -5,7 +5,7 @@ export interface BiometricAuthResult {
   error?: string;
 }
 
-class BiometricService {
+class BiometricManager {
   async isBiometricAvailable(): Promise<boolean> {
     try {
       const hasHardware = await LocalAuthentication.hasHardwareAsync();
@@ -50,4 +50,4 @@ class BiometricService {
   }
 }
 
-export const biometricService = new BiometricService();
+export const biometricService = new BiometricManager();

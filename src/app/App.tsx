@@ -2,16 +2,16 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
-import { store } from './src/store';
-import { RootStackParamList } from './src/types';
+import { store } from '../features/transfer/store';
+import { RootStackParamList } from '../features/transfer/types';
 import {
   TransferScreen,
   SelectRecipientScreen,
   ContactsScreen,
   ConfirmTransferScreen,
   ReceiptScreen,
-} from './src/screens';
-import { COLORS } from './src/constants';
+} from '../features/transfer/components';
+import { COLORS } from '../components/constants';
 import { StatusBar } from 'expo-status-bar';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

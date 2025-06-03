@@ -3,9 +3,9 @@ import { View, StyleSheet, FlatList, TouchableOpacity, Text, Alert } from 'react
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as Contacts from 'expo-contacts';
 import { RootStackParamList, Recipient } from '../types';
-import { Button, Card, Input, Loading } from '../components';
-import { COLORS, SPACING, FONT_SIZES } from '../constants';
-import { Logger } from '../utils/Logger';
+import { Button, Card, Input, Loading } from '../../../components';
+import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
+import { Logger } from '../../../utils/Logger';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Contacts'>;
 

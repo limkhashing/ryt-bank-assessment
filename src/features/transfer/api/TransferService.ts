@@ -1,6 +1,6 @@
 import { User, Recipient, Transaction, ApiResponse, TransactionStatus } from '../types';
-import { Logger } from '../utils/Logger';
-import apiClient, { simulateApiCall } from './apiClient';
+import { Logger } from '../../../utils/Logger';
+import apiClient, { simulateApiCall } from '../../../lib/apiClient';
 
 class TransferService {
   async getCurrentUser(): Promise<ApiResponse<User>> {
