@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Alert, TextInput } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Transaction, TransactionStatus } from '../types';
-import { Button, Card, Loading } from '../components';
-import { COLORS, SPACING, FONT_SIZES } from '../constants';
+import { Button, Card, Loading } from '../../../components';
+import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { formatCurrency, generateTransactionId } from '../utils';
-import { Logger } from '../utils/Logger';
+import { formatCurrency, generateTransactionId } from '../../../utils';
+import { Logger } from '../../../utils/Logger';
 import { addTransaction } from '../store';
 import { updateBalance } from '../store';
-import { transferService } from "../services";
-import { biometricService } from "../services/BiometricService";
+import { transferService } from "../api";
+import { biometricService } from "../utils/BiometricManager";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ConfirmTransfer'>;
 

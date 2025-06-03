@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
 import { Logger } from '../utils/Logger';
-import { API_DELAYS } from '../constants';
+import { API_DELAYS } from '../components/constants';
 
 // Simulated base URL for mocked API
 const BASE_URL = 'https://api.rytbank.mock';
@@ -76,6 +76,7 @@ export const simulateApiCall = async <T>(endpoint: string, mockData: T, config?:
   // In a real implementation this would be replaced with actual API calls
 
   // Simulate network success/error using shouldSucceed boolean flag
+  // TODO you may change the value of shouldSucceed to false, to simulate API errors
   const shouldSucceed = true
 
   if (!shouldSucceed) {

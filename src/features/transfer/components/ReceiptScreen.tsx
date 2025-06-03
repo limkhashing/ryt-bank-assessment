@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Text, Animated, BackHandler } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, TransactionStatus } from '../types';
-import { Button, Card } from '../components';
-import { COLORS, SPACING, FONT_SIZES } from '../constants';
-import { formatCurrency, formatDate } from '../utils';
+import { Button, Card } from '../../../components';
+import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
+import { formatCurrency, formatDate } from '../../../utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Receipt'>;
 

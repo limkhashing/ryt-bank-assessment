@@ -2,10 +2,10 @@ import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
-import { Button, Card, Input } from '../components';
-import { COLORS, SPACING, FONT_SIZES } from '../constants';
+import { Button, Card, Input } from '../../../components';
+import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
 import { useAppSelector } from '../hooks';
-import { formatCurrency } from '../utils';
+import { formatCurrency } from '../../../utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Transfer'>;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TextInput, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { COLORS, SPACING, FONT_SIZES } from '../../constants';
+import { COLORS, SPACING, FONT_SIZES } from '../constants';
 
 interface InputProps {
   value: string;

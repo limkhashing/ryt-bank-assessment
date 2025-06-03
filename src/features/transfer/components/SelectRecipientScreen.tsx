@@ -2,10 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Recipient } from '../types';
-import { Button, Card, Input } from '../components';
-import { COLORS, SPACING, FONT_SIZES } from '../constants';
-import { transferService } from '../services';
-import { Logger } from '../utils/Logger';
+import { Button, Card, Input } from '../../../components';
+import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
+import { transferService } from '../api';
+import { Logger } from '../../../utils/Logger';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
 

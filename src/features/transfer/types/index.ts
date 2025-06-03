@@ -13,4 +13,4 @@ export * from './transaction';
 export * from './navigation';
 
 // API and service-related types
-export * from './api';
+export * from './api-response';
