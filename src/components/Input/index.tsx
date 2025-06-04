@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, Text, TextInput, TextStyle, View, ViewStyle} from 'react-native';
+import React, {forwardRef} from 'react';
+import {ReturnKeyTypeOptions, StyleSheet, Text, TextInput, TextStyle, View, ViewStyle} from 'react-native';
 
 import {COLORS, FONT_SIZES, SPACING} from '../constants';
 
@@ -20,9 +20,12 @@ interface InputProps {
   style?: ViewStyle;
   inputStyle?: TextStyle;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
+  returnKeyType?: ReturnKeyTypeOptions;
+  onSubmitEditing?: () => void;
+  blurOnSubmit?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input = forwardRef<TextInput, InputProps>(({
   value,
   onChangeText,
   placeholder,
@@ -33,11 +36,15 @@ export const Input: React.FC<InputProps> = ({
   style,
   inputStyle,
   autoCapitalize = 'none',
-}) => {
+                                                          returnKeyType = 'done',
+                                                          onSubmitEditing,
+                                                          blurOnSubmit = false,
+                                                        }, ref) => {
   return (
     <View style={[styles.container, style]}>
       {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
+          ref={ref}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -46,11 +53,14 @@ export const Input: React.FC<InputProps> = ({
         autoCapitalize={autoCapitalize}
         style={[styles.input, error ? styles.inputError : {}, inputStyle]}
         placeholderTextColor={COLORS.textSecondary}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
+          blurOnSubmit={blurOnSubmit}
       />
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
