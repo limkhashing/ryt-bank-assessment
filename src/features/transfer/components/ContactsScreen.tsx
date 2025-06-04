@@ -69,11 +69,11 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const handleSelectContact = useCallback(
       (contact: Recipient) => {
-        navigation.navigate('ConfirmTransfer', {
-          recipient: contact,
-          amount,
-          note,
-        });
+          navigation.navigate('ConfirmTransfer', {
+              recipient: contact,
+              amount,
+              note,
+          });
       },
       [navigation, amount, note],
   );
@@ -81,8 +81,8 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
   const renderContactItem = useCallback(
       ({item}: { item: Recipient }) => (
           <TouchableOpacity onPress={() => handleSelectContact(item)} style={styles.contactItem}>
-            <Text style={styles.contactName}>{item.name}</Text>
-            <Text style={styles.contactPhone}>{item.phoneNumber}</Text>
+              <Text style={styles.contactName}>{item.name}</Text>
+              <Text style={styles.contactPhone}>{item.phoneNumber}</Text>
           </TouchableOpacity>
       ),
       [handleSelectContact],

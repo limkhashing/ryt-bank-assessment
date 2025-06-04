@@ -75,15 +75,15 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
           <TouchableOpacity
               onPress={() => handleSelectRecipient(item)}
               style={[
-                styles.recipientItem,
-                selectedRecipient?.id === item.id && styles.selectedRecipient,
+                  styles.recipientItem,
+                  selectedRecipient?.id === item.id && styles.selectedRecipient,
               ]}
           >
-            <View style={styles.recipientInfo}>
-              <Text style={styles.recipientName}>{item.name}</Text>
-              <Text style={styles.recipientDetail}>{item.phoneNumber}</Text>
-            </View>
-            {item.isRecent && <Text style={styles.recentBadge}>Recent</Text>}
+              <View style={styles.recipientInfo}>
+                  <Text style={styles.recipientName}>{item.name}</Text>
+                  <Text style={styles.recipientDetail}>{item.phoneNumber}</Text>
+              </View>
+              {item.isRecent && <Text style={styles.recentBadge}>Recent</Text>}
           </TouchableOpacity>
       ),
       [selectedRecipient],
