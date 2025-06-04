@@ -11,7 +11,7 @@ import {RootStackParamList} from '../types';
 type Props = NativeStackScreenProps<RootStackParamList, 'Transfer'>;
 
 export const TransferScreen: React.FC<Props> = ({ navigation }) => {
-  const {currentUser} = useAppSelector((state) => state.user);
+    const {currentUser} = useAppSelector((state) => state.user);
   const [amount, setAmount] = useState('');
   const [displayAmount, setDisplayAmount] = useState('');
   const [note, setNote] = useState('');
