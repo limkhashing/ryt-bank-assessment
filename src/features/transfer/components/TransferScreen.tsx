@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useCallback, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useRef, useState} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 
 import {Button, Card, Input} from '../../../components';
 import {COLORS, FONT_SIZES, SPACING} from '../../../components/constants';
@@ -11,11 +11,15 @@ import {RootStackParamList} from '../types';
 type Props = NativeStackScreenProps<RootStackParamList, 'Transfer'>;
 
 export const TransferScreen: React.FC<Props> = ({ navigation }) => {
-    const {currentUser} = useAppSelector((state) => state.user);
+  const {currentUser} = useAppSelector((state) => state.user);
   const [amount, setAmount] = useState('');
   const [displayAmount, setDisplayAmount] = useState('');
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
+
+  // Create refs for input fields
+  const amountInputRef = useRef<TextInput>(null);
+  const noteInputRef = useRef<TextInput>(null);
 
   const handleAmountChange = useCallback((text: string) => {
     // Remove all non-numeric characters
@@ -54,6 +58,22 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
     });
   };
 
+  // Handle amount input submission to move to note field
+  const handleAmountSubmit = () => {
+    if (noteInputRef.current) {
+      noteInputRef.current.focus();
+    }
+  };
+
+  // Handle note input submission to trigger continue button if enabled
+  const handleNoteSubmit = () => {
+    const numericAmount = parseFloat(amount);
+    const isButtonEnabled = amount && numericAmount > 0 && !error;
+    if (isButtonEnabled) {
+      handleContinue();
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Card style={styles.userInfoCard}>
@@ -70,6 +90,7 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
 
       <Card style={styles.transferCard}>
         <Input
+            ref={amountInputRef}
           label="Amount"
           value={displayAmount}
           onChangeText={handleAmountChange}
@@ -77,13 +98,20 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
           placeholder="RM0.00"
           error={error}
           style={styles.input}
+            returnKeyType="next"
+            onSubmitEditing={handleAmountSubmit}
+            blurOnSubmit={false}
         />
         <Input
+            ref={noteInputRef}
           label="Note (Optional)"
           value={note}
           onChangeText={setNote}
           placeholder="What's this transfer for?"
           style={styles.input}
+            returnKeyType="done"
+            onSubmitEditing={handleNoteSubmit}
+            blurOnSubmit={true}
         />
       </Card>
 
