@@ -2,8 +2,8 @@
  * Navigation-related type definitions
  */
 
-import { Recipient } from './user';
-import { Transaction } from './transaction';
+import {Transaction} from './transaction';
+import {Recipient} from './user';
 
 export type RootStackParamList = {
   Transfer: undefined;

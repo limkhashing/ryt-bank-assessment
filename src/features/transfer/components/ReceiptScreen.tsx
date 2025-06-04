@@ -1,10 +1,11 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import { View, StyleSheet, Text, Animated, BackHandler } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, TransactionStatus } from '../types';
-import { Button, Card } from '../../../components';
-import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
-import { formatCurrency, formatDate } from '../../../utils';
+import {Animated, BackHandler, StyleSheet, Text, View} from 'react-native';
+
+import {Button, Card} from '../../../components';
+import {COLORS, FONT_SIZES, SPACING} from '../../../components/constants';
+import {formatCurrency, formatDate} from '../../../utils';
+import {RootStackParamList, TransactionStatus} from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Receipt'>;
 
@@ -104,11 +105,7 @@ export const ReceiptScreen: React.FC<Props> = ({ navigation, route }) => {
           </View>
         </Card>
 
-        <Button
-          title="Done"
-          onPress={handleDone}
-          style={styles.button}
-        />
+        <Button title="Done" onPress={handleDone} style={styles.button}/>
       </Animated.View>
     </View>
   );

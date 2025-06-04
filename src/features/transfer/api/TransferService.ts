@@ -1,6 +1,6 @@
-import { User, Recipient, Transaction, ApiResponse, TransactionStatus } from '../types';
-import { Logger } from '../../../utils/Logger';
-import apiClient, { simulateApiCall } from '../../../lib/apiClient';
+import {simulateApiCall} from '../../../lib/apiClient';
+import {Logger} from '../../../utils/Logger';
+import {ApiResponse, Recipient, Transaction, TransactionStatus, User} from '../types';
 
 class TransferService {
   async getCurrentUser(): Promise<ApiResponse<User>> {
@@ -48,9 +48,10 @@ class TransferService {
 
       // Simulate API call using Axios
       // In production: const response = await apiClient.post('/transactions', transactionWithStatus);
-      const processedTransaction = await simulateApiCall('/transactions', 
+      const processedTransaction = await simulateApiCall(
+          '/transactions',
         { ...transactionWithStatus, status: TransactionStatus.COMPLETED },
-        { method: 'POST' }
+          {method: 'POST'},
       );
 
       return { success: true, data: processedTransaction };

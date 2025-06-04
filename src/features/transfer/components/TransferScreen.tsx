@@ -1,16 +1,17 @@
-import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types';
-import { Button, Card, Input } from '../../../components';
-import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
-import { useAppSelector } from '../hooks';
-import { formatCurrency } from '../../../utils';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useCallback, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+
+import {Button, Card, Input} from '../../../components';
+import {COLORS, FONT_SIZES, SPACING} from '../../../components/constants';
+import {formatCurrency} from '../../../utils';
+import {useAppSelector} from '../hooks';
+import {RootStackParamList} from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Transfer'>;
 
 export const TransferScreen: React.FC<Props> = ({ navigation }) => {
-  const { currentUser } = useAppSelector(state => state.user);
+  const {currentUser} = useAppSelector((state) => state.user);
   const [amount, setAmount] = useState('');
   const [displayAmount, setDisplayAmount] = useState('');
   const [note, setNote] = useState('');
@@ -48,9 +49,9 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
     const numericAmount = parseFloat(amount);
     if (!validateAmount(numericAmount)) return;
     navigation.navigate('SelectRecipient', {
-        amount: numericAmount,
-        note: note,
-      });
+      amount: numericAmount,
+      note: note,
+    });
   };
 
   return (
@@ -85,7 +86,7 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
           style={styles.input}
         />
       </Card>
-      
+
       <Button
         title="Continue"
         onPress={handleContinue}

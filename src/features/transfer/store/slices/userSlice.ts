@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../types';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+
 import mockUser from '../../data/mockUser.json';
+import {User} from '../../types';
 
 interface UserState {
   currentUser: User | null;

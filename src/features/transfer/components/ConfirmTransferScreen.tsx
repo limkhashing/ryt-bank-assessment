@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, Alert, TextInput } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Transaction, TransactionStatus } from '../types';
-import { Button, Card, Loading } from '../../../components';
-import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { formatCurrency, generateTransactionId } from '../../../utils';
-import { Logger } from '../../../utils/Logger';
-import { addTransaction } from '../store';
-import { updateBalance } from '../store';
-import { transferService } from "../api";
-import { biometricService } from "../utils/BiometricManager";
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {Alert, StyleSheet, Text, TextInput, View} from 'react-native';
+
+import {Button, Card, Loading} from '../../../components';
+import {COLORS, FONT_SIZES, SPACING} from '../../../components/constants';
+import {formatCurrency, generateTransactionId} from '../../../utils';
+import {Logger} from '../../../utils/Logger';
+import {transferService} from '../api';
+import {useAppDispatch, useAppSelector} from '../hooks';
+import {addTransaction, updateBalance} from '../store';
+import {RootStackParamList, Transaction, TransactionStatus} from '../types';
+import {biometricService} from '../utils/BiometricManager';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ConfirmTransfer'>;
 
 export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) => {
   const { amount, recipient, note } = route.params;
   const dispatch = useAppDispatch();
-  const { currentUser } = useAppSelector(state => state.user);
+  const {currentUser} = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [showPinInput, setShowPinInput] = useState(false);
   const [pin, setPin] = useState('');
@@ -27,20 +27,20 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
     try {
       setLoading(true);
       const biometricResult = await biometricService.authenticate(
-        'Authenticate to confirm transfer'
+          'Authenticate to confirm transfer',
       );
 
       if (biometricResult.success) {
         // Biometric authentication successful
         await processTransfer();
-        return
+        return;
       }
 
       if (biometricResult.error === 'BIOMETRIC_NOT_AVAILABLE') {
         // Fallback to PIN authentication
         setShowPinInput(true);
         setLoading(false);
-        return
+        return;
       }
 
       // Biometric authentication failed
@@ -48,9 +48,9 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
           'Authentication Failed',
           'Biometric authentication failed. Please try again or use PIN.',
           [
-            { text: 'Try Again', onPress: () => handleAuthentication() },
-            { text: 'Use PIN', onPress: () => setShowPinInput(true) }
-          ]
+            {text: 'Try Again', onPress: () => handleAuthentication()},
+            {text: 'Use PIN', onPress: () => setShowPinInput(true)},
+          ],
       );
       setLoading(false);
     } catch (error) {
@@ -103,10 +103,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
       navigation.replace('Receipt', { transaction });
     } catch (error) {
       Logger.error('Transfer error', error);
-      Alert.alert(
-        'Transfer Failed',
-        'Something went wrong. Please try again.'
-      );
+      Alert.alert('Transfer Failed', 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -132,11 +129,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
           />
           <View style={styles.buttonContainer}>
             <Button title="Submit PIN" onPress={handlePinSubmit} />
-            <Button
-                title="Cancel"
-                onPress={() => navigation.goBack()}
-                variant="outline"
-            />
+            <Button title="Cancel" onPress={() => navigation.goBack()} variant="outline"/>
           </View>
         </Card>
       </View>
@@ -147,7 +140,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
     <View style={styles.container}>
       <Card style={styles.detailsCard}>
         <Text style={styles.title}>Confirm Transfer</Text>
-        
+
         <View style={styles.row}>
           <Text style={styles.label}>Amount:</Text>
           <Text style={styles.value}>{formatCurrency(amount)}</Text>
@@ -167,11 +160,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
 
         <View style={styles.buttonContainer}>
           <Button title="Confirm Transfer" onPress={handleAuthentication} />
-          <Button 
-            title="Cancel" 
-            onPress={() => navigation.goBack()} 
-            variant="outline"
-          />
+          <Button title="Cancel" onPress={() => navigation.goBack()} variant="outline"/>
         </View>
       </Card>
     </View>

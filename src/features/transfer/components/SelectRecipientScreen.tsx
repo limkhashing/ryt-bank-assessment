@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Recipient } from '../types';
-import { Button, Card, Input } from '../../../components';
-import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
-import { transferService } from '../api';
-import { Logger } from '../../../utils/Logger';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useCallback, useEffect, useState} from 'react';
+import {ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+
+import {Button, Card, Input} from '../../../components';
+import {COLORS, FONT_SIZES, SPACING} from '../../../components/constants';
+import {Logger} from '../../../utils/Logger';
+import {transferService} from '../api';
+import {Recipient, RootStackParamList} from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'SelectRecipient'>;
 
@@ -36,14 +37,16 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
   }, []);
 
   useEffect(() => {
-    fetchRecipients().then(
+    fetchRecipients()
+        .then
         // no operations
-    );
+        ();
   }, [fetchRecipients]);
 
-  const filteredRecipients = recipients.filter(recipient =>
-    recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery))
+  const filteredRecipients = recipients.filter(
+      (recipient) =>
+          recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery)),
   );
 
   const handleSelectRecipient = useCallback((recipient: Recipient) => {
@@ -67,23 +70,24 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
     }
   }, [navigation, selectedRecipient, amount, note]);
 
-  const renderRecipientItem = useCallback(({ item }: { item: Recipient }) => (
-    <TouchableOpacity
-      onPress={() => handleSelectRecipient(item)}
-      style={[
-        styles.recipientItem,
-        selectedRecipient?.id === item.id && styles.selectedRecipient,
-      ]}
-    >
-      <View style={styles.recipientInfo}>
-        <Text style={styles.recipientName}>{item.name}</Text>
-        <Text style={styles.recipientDetail}>
-          {item.phoneNumber}
-        </Text>
-      </View>
-      {item.isRecent && <Text style={styles.recentBadge}>Recent</Text>}
-    </TouchableOpacity>
-  ), [selectedRecipient]);
+  const renderRecipientItem = useCallback(
+      ({item}: { item: Recipient }) => (
+          <TouchableOpacity
+              onPress={() => handleSelectRecipient(item)}
+              style={[
+                styles.recipientItem,
+                selectedRecipient?.id === item.id && styles.selectedRecipient,
+              ]}
+          >
+            <View style={styles.recipientInfo}>
+              <Text style={styles.recipientName}>{item.name}</Text>
+              <Text style={styles.recipientDetail}>{item.phoneNumber}</Text>
+            </View>
+            {item.isRecent && <Text style={styles.recentBadge}>Recent</Text>}
+          </TouchableOpacity>
+      ),
+      [selectedRecipient],
+  );
 
   return (
     <View style={styles.container}>
@@ -133,7 +137,7 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
         <FlatList
           data={filteredRecipients}
           renderItem={renderRecipientItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           style={styles.list}
           contentContainerStyle={styles.listContent}
         />
