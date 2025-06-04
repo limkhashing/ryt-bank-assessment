@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
-import { COLORS, FONT_SIZES, SPACING } from '../constants';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+
+import {COLORS, FONT_SIZES, SPACING} from '../constants';
 
 interface LoadingProps {
   message?: string;

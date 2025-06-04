@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Text, Alert } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import * as Contacts from 'expo-contacts';
-import { RootStackParamList, Recipient } from '../types';
-import { Button, Card, Input, Loading } from '../../../components';
-import { COLORS, SPACING, FONT_SIZES } from '../../../components/constants';
-import { Logger } from '../../../utils/Logger';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Alert, FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+
+import {Button, Card, Input, Loading} from '../../../components';
+import {COLORS, FONT_SIZES, SPACING} from '../../../components/constants';
+import {Logger} from '../../../utils/Logger';
+import {Recipient, RootStackParamList} from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Contacts'>;
 
@@ -29,14 +30,11 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
       } else {
         Alert.alert(
           'Permission Required',
-          'Please grant contacts permission to select a recipient from your contacts.'
+            'Please grant contacts permission to select a recipient from your contacts.',
         );
       }
     } catch (error) {
-      Alert.alert(
-        'Error',
-        'Failed to access contacts. Please try again.'
-      );
+      Alert.alert('Error', 'Failed to access contacts. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -50,8 +48,8 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
       });
 
       const formattedContacts: Recipient[] = data
-        .filter(contact => contact.name && contact.phoneNumbers?.[0]?.number && contact.id)
-        .map(contact => ({
+          .filter((contact) => contact.name && contact.phoneNumbers?.[0]?.number && contact.id)
+          .map((contact) => ({
           id: contact.id!,
           name: contact.name,
           phoneNumber: contact.phoneNumbers![0].number,
@@ -63,28 +61,32 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (contact.phoneNumber && contact.phoneNumber.includes(searchQuery))
+  const filteredContacts = contacts.filter(
+      (contact) =>
+          contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (contact.phoneNumber && contact.phoneNumber.includes(searchQuery)),
   );
 
-  const handleSelectContact = useCallback((contact: Recipient) => {
-    navigation.navigate('ConfirmTransfer', {
-      recipient: contact,
-      amount,
-      note,
-    });
-  }, [navigation, amount, note]);
+  const handleSelectContact = useCallback(
+      (contact: Recipient) => {
+        navigation.navigate('ConfirmTransfer', {
+          recipient: contact,
+          amount,
+          note,
+        });
+      },
+      [navigation, amount, note],
+  );
 
-  const renderContactItem = useCallback(({ item }: { item: Recipient }) => (
-    <TouchableOpacity
-      onPress={() => handleSelectContact(item)}
-      style={styles.contactItem}
-    >
-      <Text style={styles.contactName}>{item.name}</Text>
-      <Text style={styles.contactPhone}>{item.phoneNumber}</Text>
-    </TouchableOpacity>
-  ), [handleSelectContact]);
+  const renderContactItem = useCallback(
+      ({item}: { item: Recipient }) => (
+          <TouchableOpacity onPress={() => handleSelectContact(item)} style={styles.contactItem}>
+            <Text style={styles.contactName}>{item.name}</Text>
+            <Text style={styles.contactPhone}>{item.phoneNumber}</Text>
+          </TouchableOpacity>
+      ),
+      [handleSelectContact],
+  );
 
   if (loading) {
     return <Loading message="Loading contacts..." />;
@@ -123,16 +125,14 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
         <FlatList
           data={filteredContacts}
           renderItem={renderContactItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           style={styles.list}
           contentContainerStyle={styles.listContent}
         />
       ) : (
         <View style={styles.emptyState}>
           <Text style={styles.emptyStateText}>No Contacts Found</Text>
-          <Text style={styles.emptyStateSubtext}>
-            Try searching with a different term
-          </Text>
+          <Text style={styles.emptyStateSubtext}>Try searching with a different term</Text>
         </View>
       )}
     </View>

@@ -2,12 +2,12 @@
  * Transaction-related type definitions
  */
 
-import { Recipient } from './user';
+import {Recipient} from './user';
 
 export enum TransactionStatus {
   PENDING = 'pending',
   COMPLETED = 'completed',
-  FAILED = 'failed'
+  FAILED = 'failed',
 }
 
 export interface Transaction {

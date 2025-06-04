@@ -25,7 +25,7 @@ class BiometricManager {
         // If biometrics not available, we'll handle PIN authentication in the UI
         return {
           success: false,
-          error: 'BIOMETRIC_NOT_AVAILABLE'
+          error: 'BIOMETRIC_NOT_AVAILABLE',
         };
       }
 
@@ -38,13 +38,13 @@ class BiometricManager {
 
       return {
         success: result.success,
-        error: result.success ? undefined : 'BIOMETRIC_FAILED'
+        error: result.success ? undefined : 'BIOMETRIC_FAILED',
       };
     } catch (error) {
       console.error('Authentication error:', error);
       return {
         success: false,
-        error: 'AUTHENTICATION_ERROR'
+        error: 'AUTHENTICATION_ERROR',
       };
     }
   }

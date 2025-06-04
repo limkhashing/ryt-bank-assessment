@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TextInput, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { COLORS, SPACING, FONT_SIZES } from '../constants';
+import {StyleSheet, Text, TextInput, TextStyle, View, ViewStyle} from 'react-native';
+
+import {COLORS, FONT_SIZES, SPACING} from '../constants';
 
 interface InputProps {
   value: string;
@@ -9,7 +10,13 @@ interface InputProps {
   label?: string;
   error?: string;
   secureTextEntry?: boolean;
-  keyboardType?: 'default' | 'number-pad' | 'decimal-pad' | 'numeric' | 'email-address' | 'phone-pad';
+  keyboardType?:
+      | 'default'
+      | 'number-pad'
+      | 'decimal-pad'
+      | 'numeric'
+      | 'email-address'
+      | 'phone-pad';
   style?: ViewStyle;
   inputStyle?: TextStyle;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
@@ -37,11 +44,7 @@ export const Input: React.FC<InputProps> = ({
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         autoCapitalize={autoCapitalize}
-        style={[
-          styles.input,
-          error ? styles.inputError : {},
-          inputStyle,
-        ]}
+        style={[styles.input, error ? styles.inputError : {}, inputStyle]}
         placeholderTextColor={COLORS.textSecondary}
       />
       {error && <Text style={styles.error}>{error}</Text>}
