@@ -15,12 +15,14 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.anonymous.rytbankassessment",
       "supportsTablet": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "We need to access Face ID to authenticate your transfers."
       }
     },
     "android": {
+      "package": "com.anonymous.rytbankassessment",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2563EB"
