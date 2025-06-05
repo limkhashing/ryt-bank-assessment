@@ -11,8 +11,4 @@
 -keep class com.swmansion.reanimated.** { *; }
 -keep class com.facebook.react.turbomodule.** { *; }
 
-# react-native-contacts
--keep class com.rt2zz.reactnativecontacts.** {*;}
--keepclassmembers class com.rt2zz.reactnativecontacts.** {*;}
-
 # Add any project specific keep options here:
