@@ -113,14 +113,14 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
             onSubmitEditing={handleNoteSubmit}
             blurOnSubmit={true}
         />
-      </Card>
 
-      <Button
-        title="Continue"
-        onPress={handleContinue}
-        disabled={!amount || parseFloat(amount) <= 0 || !!error}
-        style={styles.button}
-      />
+        <Button
+            title="Continue"
+            onPress={handleContinue}
+            disabled={!amount || parseFloat(amount) <= 0 || !!error}
+            style={styles.button}
+        />
+      </Card>
     </View>
   );
 };

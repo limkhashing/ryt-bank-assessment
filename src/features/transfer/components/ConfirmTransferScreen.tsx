@@ -17,7 +17,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'ConfirmTransfer'>;
 export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) => {
   const { amount, recipient, note } = route.params;
   const dispatch = useAppDispatch();
-    const {currentUser} = useAppSelector((state) => state.user);
+  const {currentUser} = useAppSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [showPinInput, setShowPinInput] = useState(false);
   const [pin, setPin] = useState('');
@@ -48,8 +48,8 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
           'Authentication Failed',
           'Biometric authentication failed. Please try again or use PIN.',
           [
-              {text: 'Try Again', onPress: () => handleAuthentication()},
-              {text: 'Use PIN', onPress: () => setShowPinInput(true)},
+            {text: 'Try Again', onPress: () => handleAuthentication()},
+            {text: 'Use PIN', onPress: () => setShowPinInput(true)},
           ],
       );
       setLoading(false);
@@ -129,7 +129,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
           />
           <View style={styles.buttonContainer}>
             <Button title="Submit PIN" onPress={handlePinSubmit} />
-              <Button title="Cancel" onPress={() => navigation.goBack()} variant="outline"/>
+            <Button title="Cancel" onPress={() => navigation.goBack()} variant="outline"/>
           </View>
         </Card>
       </View>
@@ -160,7 +160,7 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
 
         <View style={styles.buttonContainer}>
           <Button title="Confirm Transfer" onPress={handleAuthentication} />
-            <Button title="Cancel" onPress={() => navigation.goBack()} variant="outline"/>
+          <Button title="Cancel" onPress={() => navigation.goBack()} variant="outline"/>
         </View>
       </Card>
     </View>

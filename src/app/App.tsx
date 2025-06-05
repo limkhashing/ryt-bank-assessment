@@ -2,9 +2,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {Provider} from 'react-redux';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Platform, View} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Provider} from 'react-redux';
 
 import {COLORS} from '../components/constants';
 import {
@@ -41,7 +41,7 @@ export default function App() {
                             },
                             contentStyle: {
                                 backgroundColor: COLORS.surface,
-                            }
+                            },
                         }}
                     >
                         <Stack.Screen
