@@ -105,7 +105,7 @@ export const ReceiptScreen: React.FC<Props> = ({ navigation, route }) => {
           </View>
         </Card>
 
-          <Button title="Done" onPress={handleDone} style={styles.button}/>
+        <Button title="Done" onPress={handleDone} style={styles.button} />
       </Animated.View>
     </View>
   );

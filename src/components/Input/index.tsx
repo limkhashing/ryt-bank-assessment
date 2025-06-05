@@ -1,5 +1,5 @@
 import React, {forwardRef} from 'react';
-import {ReturnKeyTypeOptions, StyleSheet, Text, TextInput, TextStyle, View, ViewStyle} from 'react-native';
+import {ReturnKeyTypeOptions, StyleSheet, Text, TextInput, TextStyle, View, ViewStyle,} from 'react-native';
 
 import {COLORS, FONT_SIZES, SPACING} from '../constants';
 
@@ -11,12 +11,12 @@ interface InputProps {
   error?: string;
   secureTextEntry?: boolean;
   keyboardType?:
-      | 'default'
-      | 'number-pad'
-      | 'decimal-pad'
-      | 'numeric'
-      | 'email-address'
-      | 'phone-pad';
+    | 'default'
+    | 'number-pad'
+    | 'decimal-pad'
+    | 'numeric'
+    | 'email-address'
+    | 'phone-pad';
   style?: ViewStyle;
   inputStyle?: TextStyle;
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
@@ -25,42 +25,47 @@ interface InputProps {
   blurOnSubmit?: boolean;
 }
 
-export const Input = forwardRef<TextInput, InputProps>(({
-  value,
-  onChangeText,
-  placeholder,
-  label,
-  error,
-  secureTextEntry,
-  keyboardType = 'default',
-  style,
-  inputStyle,
-  autoCapitalize = 'none',
-                                                          returnKeyType = 'done',
-                                                          onSubmitEditing,
-                                                          blurOnSubmit = false,
-                                                        }, ref) => {
-  return (
-    <View style={[styles.container, style]}>
-      {label && <Text style={styles.label}>{label}</Text>}
-      <TextInput
+export const Input = forwardRef<TextInput, InputProps>(
+  (
+    {
+      value,
+      onChangeText,
+      placeholder,
+      label,
+      error,
+      secureTextEntry,
+      keyboardType = 'default',
+      style,
+      inputStyle,
+      autoCapitalize = 'none',
+      returnKeyType = 'done',
+      onSubmitEditing,
+      blurOnSubmit = false,
+    },
+    ref,
+  ) => {
+    return (
+      <View style={[styles.container, style]}>
+        {label && <Text style={styles.label}>{label}</Text>}
+        <TextInput
           ref={ref}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        secureTextEntry={secureTextEntry}
-        keyboardType={keyboardType}
-        autoCapitalize={autoCapitalize}
-        style={[styles.input, error ? styles.inputError : {}, inputStyle]}
-        placeholderTextColor={COLORS.textSecondary}
+          value={value}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+          secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
+          autoCapitalize={autoCapitalize}
+          style={[styles.input, error ? styles.inputError : {}, inputStyle]}
+          placeholderTextColor={COLORS.textSecondary}
           returnKeyType={returnKeyType}
           onSubmitEditing={onSubmitEditing}
           blurOnSubmit={blurOnSubmit}
-      />
-      {error && <Text style={styles.error}>{error}</Text>}
-    </View>
-  );
-});
+        />
+        {error && <Text style={styles.error}>{error}</Text>}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -20,6 +20,7 @@
     "axios": "^1.6.7",
     "expo": "~53.0.9",
     "expo-contacts": "^14.2.4",
+    "expo-dev-client": "~5.1.8",
     "expo-local-authentication": "~16.0.4",
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
@@ -28,11 +29,11 @@
     "react-native-contacts": "^8.0.5",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.24.0",
+    "react-native-keyboard-controller": "^1.17.3",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
-    "react-redux": "^9.2.0",
-    "expo-dev-client": "~5.1.8"
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

@@ -49,9 +49,9 @@ class TransferService {
       // Simulate API call using Axios
       // In production: const response = await apiClient.post('/transactions', transactionWithStatus);
       const processedTransaction = await simulateApiCall(
-          '/transactions',
+        '/transactions',
         { ...transactionWithStatus, status: TransactionStatus.COMPLETED },
-          {method: 'POST'},
+        { method: 'POST' },
       );
 
       return { success: true, data: processedTransaction };

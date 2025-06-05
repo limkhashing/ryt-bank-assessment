@@ -30,7 +30,7 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
       } else {
         Alert.alert(
           'Permission Required',
-            'Please grant contacts permission to select a recipient from your contacts.',
+          'Please grant contacts permission to select a recipient from your contacts.',
         );
       }
     } catch (error) {
@@ -48,8 +48,8 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
       });
 
       const formattedContacts: Recipient[] = data
-          .filter((contact) => contact.name && contact.phoneNumbers?.[0]?.number && contact.id)
-          .map((contact) => ({
+        .filter((contact) => contact.name && contact.phoneNumbers?.[0]?.number && contact.id)
+        .map((contact) => ({
           id: contact.id!,
           name: contact.name,
           phoneNumber: contact.phoneNumbers![0].number,
@@ -62,30 +62,30 @@ export const ContactsScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const filteredContacts = contacts.filter(
-      (contact) =>
-          contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (contact.phoneNumber && contact.phoneNumber.includes(searchQuery)),
+    (contact) =>
+      contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (contact.phoneNumber && contact.phoneNumber.includes(searchQuery)),
   );
 
   const handleSelectContact = useCallback(
-      (contact: Recipient) => {
-          navigation.navigate('ConfirmTransfer', {
-              recipient: contact,
-              amount,
-              note,
-          });
-      },
-      [navigation, amount, note],
+    (contact: Recipient) => {
+      navigation.navigate('ConfirmTransfer', {
+        recipient: contact,
+        amount,
+        note,
+      });
+    },
+    [navigation, amount, note],
   );
 
   const renderContactItem = useCallback(
-      ({item}: { item: Recipient }) => (
-          <TouchableOpacity onPress={() => handleSelectContact(item)} style={styles.contactItem}>
-              <Text style={styles.contactName}>{item.name}</Text>
-              <Text style={styles.contactPhone}>{item.phoneNumber}</Text>
-          </TouchableOpacity>
-      ),
-      [handleSelectContact],
+    ({ item }: { item: Recipient }) => (
+      <TouchableOpacity onPress={() => handleSelectContact(item)} style={styles.contactItem}>
+        <Text style={styles.contactName}>{item.name}</Text>
+        <Text style={styles.contactPhone}>{item.phoneNumber}</Text>
+      </TouchableOpacity>
+    ),
+    [handleSelectContact],
   );
 
   if (loading) {
