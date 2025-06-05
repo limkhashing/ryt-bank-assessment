@@ -11,7 +11,7 @@ import {RootStackParamList} from '../types';
 type Props = NativeStackScreenProps<RootStackParamList, 'Transfer'>;
 
 export const TransferScreen: React.FC<Props> = ({ navigation }) => {
-  const {currentUser} = useAppSelector((state) => state.user);
+  const { currentUser } = useAppSelector((state) => state.user);
   const [amount, setAmount] = useState('');
   const [displayAmount, setDisplayAmount] = useState('');
   const [note, setNote] = useState('');
@@ -90,7 +90,7 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
 
       <Card style={styles.transferCard}>
         <Input
-            ref={amountInputRef}
+          ref={amountInputRef}
           label="Amount"
           value={displayAmount}
           onChangeText={handleAmountChange}
@@ -98,27 +98,27 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
           placeholder="RM0.00"
           error={error}
           style={styles.input}
-            returnKeyType="next"
-            onSubmitEditing={handleAmountSubmit}
-            blurOnSubmit={false}
+          returnKeyType="next"
+          onSubmitEditing={handleAmountSubmit}
+          blurOnSubmit={false}
         />
         <Input
-            ref={noteInputRef}
+          ref={noteInputRef}
           label="Note (Optional)"
           value={note}
           onChangeText={setNote}
           placeholder="What's this transfer for?"
           style={styles.input}
-            returnKeyType="done"
-            onSubmitEditing={handleNoteSubmit}
-            blurOnSubmit={true}
+          returnKeyType="done"
+          onSubmitEditing={handleNoteSubmit}
+          blurOnSubmit={true}
         />
 
         <Button
-            title="Continue"
-            onPress={handleContinue}
-            disabled={!amount || parseFloat(amount) <= 0 || !!error}
-            style={styles.button}
+          title="Continue"
+          onPress={handleContinue}
+          disabled={!amount || parseFloat(amount) <= 0 || !!error}
+          style={styles.button}
         />
       </Card>
     </View>

@@ -67,9 +67,9 @@ apiClient.interceptors.response.use(
  * Creates a simulated API call using Axios that mimics real API behavior
  */
 export const simulateApiCall = async <T>(
-    endpoint: string,
-    mockData: T,
-    config?: AxiosRequestConfig,
+  endpoint: string,
+  mockData: T,
+  config?: AxiosRequestConfig,
 ): Promise<T> => {
   // Random delay between 0.5 to 2 seconds for simulating network conditions
   const delay = Math.floor(Math.random() * (API_DELAYS.max - API_DELAYS.min)) + API_DELAYS.min;

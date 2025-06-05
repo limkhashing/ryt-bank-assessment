@@ -10,7 +10,6 @@ A modern and secure payment transfer application built with React Native, TypeSc
 - 🎨 Modern UI with smooth animations
 - 📱 Cross-platform (iOS & Android)
 - 🔄 Simulated API integration
-- 🧪 Unit tests included
 
 ## Tech Stack
 
@@ -20,29 +19,16 @@ A modern and secure payment transfer application built with React Native, TypeSc
 - React Navigation for routing
 - Axios for API requests
 - React Native Biometrics
-- React Native Elements UI library
-- Jest & React Native Testing Library
-
-## Project Structure
-
-```
-src/
-  ├── components/    # Reusable UI components
-  ├── screens/      # Main application screens
-  ├── services/     # API and biometric services
-  ├── store/        # Redux store and slices
-  ├── types/        # TypeScript interfaces
-  └── utils/        # Helper functions
-```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
-- Expo CLI
-- iOS Simulator (for Mac) or Android Emulator
+- Node.js (v18 or higher recommended)
+- npm (v9+) or yarn (v1+)
+- Expo CLI (`npm install -g expo-cli`)
+- Xcode (for iOS Simulator, macOS only)
+- Android Studio (for Android Emulator)
 
 ### Installation
 
@@ -59,71 +45,25 @@ src/
    npm install
    ```
 
-3. Start the development server:
+### Running with Expo (Recommended)
+
+1. Start the Expo development server:
 
    ```bash
-   npm start
+   npx expo start
    ```
 
-4. Run on iOS or Android:
+2. Use the Expo Go app on your device, or run on an emulator/simulator:
+   - Press `i` to open in iOS Simulator
+   - Press `a` to open in Android Emulator
+
+### Running a Development Build (Bare Workflow)
+
+1. Build the app for development:
+
    ```bash
-   npm run ios
-   # or
-   npm run android
+   npx expo run:ios   # for iOS
+   npx expo run:android   # for Android
    ```
 
-## Design Decisions
-
-### State Management
-
-- Using Redux Toolkit for its simplified setup and built-in immutability helpers
-- Centralized store for user data, transactions, and app state
-
-### Authentication
-
-- Biometric authentication for secure transfers
-- Fallback to PIN/passcode when biometrics unavailable
-
-### Performance
-
-- Optimized list rendering with React.memo and PureComponent
-- Debounced search inputs
-- Lazy loading for better initial load time
-
-### UI/UX
-
-- Consistent spacing and typography system
-- Smooth animations for better user experience
-- Clear error messages and loading states
-- Accessibility considerations
-
-## Future Improvements
-
-1. Add offline support with local storage
-2. Implement real API integration
-3. Add more payment methods
-4. Enhanced recipient management
-5. Transaction history with filters
-6. Add push notifications
-7. Support for multiple currencies
-8. Dark mode support
-
-## Testing
-
-Run the test suite:
-
-```bash
-npm test
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License.
+2. Follow the Expo CLI instructions to open the app in your simulator or device.

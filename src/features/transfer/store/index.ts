@@ -14,14 +14,14 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export const {
-    setUser,
-    setLoading: setUserLoading,
-    setError: setUserError,
-    updateBalance,
+  setUser,
+  setLoading: setUserLoading,
+  setError: setUserError,
+  updateBalance,
 } = userSlice.actions;
 export const {
-    setTransactions,
-    addTransaction,
-    setLoading: setTransactionLoading,
-    setError: setTransactionError,
+  setTransactions,
+  addTransaction,
+  setLoading: setTransactionLoading,
+  setError: setTransactionError,
 } = transactionSlice.actions;

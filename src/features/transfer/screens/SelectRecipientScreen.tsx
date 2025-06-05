@@ -38,15 +38,15 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
 
   useEffect(() => {
     fetchRecipients()
-        .then
-        // no operations
-        ();
+      .then
+      // no operations
+      ();
   }, [fetchRecipients]);
 
   const filteredRecipients = recipients.filter(
-      (recipient) =>
-          recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery)),
+    (recipient) =>
+      recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (recipient.phoneNumber && recipient.phoneNumber.includes(searchQuery)),
   );
 
   const handleSelectRecipient = useCallback((recipient: Recipient) => {
@@ -71,22 +71,22 @@ export const SelectRecipientScreen: React.FC<Props> = ({ navigation, route }) =>
   }, [navigation, selectedRecipient, amount, note]);
 
   const renderRecipientItem = useCallback(
-      ({item}: { item: Recipient }) => (
-          <TouchableOpacity
-              onPress={() => handleSelectRecipient(item)}
-              style={[
-                  styles.recipientItem,
-                  selectedRecipient?.id === item.id && styles.selectedRecipient,
-              ]}
-          >
-              <View style={styles.recipientInfo}>
-                  <Text style={styles.recipientName}>{item.name}</Text>
-                  <Text style={styles.recipientDetail}>{item.phoneNumber}</Text>
-              </View>
-              {item.isRecent && <Text style={styles.recentBadge}>Recent</Text>}
-          </TouchableOpacity>
-      ),
-      [selectedRecipient],
+    ({ item }: { item: Recipient }) => (
+      <TouchableOpacity
+        onPress={() => handleSelectRecipient(item)}
+        style={[
+          styles.recipientItem,
+          selectedRecipient?.id === item.id && styles.selectedRecipient,
+        ]}
+      >
+        <View style={styles.recipientInfo}>
+          <Text style={styles.recipientName}>{item.name}</Text>
+          <Text style={styles.recipientDetail}>{item.phoneNumber}</Text>
+        </View>
+        {item.isRecent && <Text style={styles.recentBadge}>Recent</Text>}
+      </TouchableOpacity>
+    ),
+    [selectedRecipient],
   );
 
   return (
