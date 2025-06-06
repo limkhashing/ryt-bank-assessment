@@ -59,7 +59,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build with Gradle
+      - name: Build Android
         run: |
           cd android
           ./gradlew assembleDebug
@@ -69,39 +69,52 @@ jobs:
         with:
           name: app-android
           path: |
-            android/app/build/outputs/apk/debug/app-debug.apk
             # Add more if you have aab, mapping files, etc.
             # android/app/build/outputs/bundle/debug/app-debug.aab
+            android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 5
 
-#  build-ios:
-#    name: Build iOS
-#    needs: lint-and-test
-#    runs-on: macos-latest
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Setup Node.js
-#        uses: actions/setup-node@v4
-#        with:
-#          node-version: 20
-#          cache: 'npm'
-#
-#      - name: Install dependencies
-#        run: npm ci
-#
-#      - name: Setup Expo and EAS
-#        run: npm install -g expo-cli eas-cli
-#
-#      - name: Build iOS with EAS
-#        run: eas build --platform ios --non-interactive --local
-#        env:
-#          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-#
-#      - name: Upload iOS artifact
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: app-ios
-#          path: build/ios/
-#          retention-days: 5
+  build-ios:
+    name: Build iOS
+    needs: lint
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install CocoaPods
+        run: |
+          cd ios
+          pod install
+
+      # Since I do not have an Apple Developer account, I will not be able to sign the app.
+      # This job will build the unsigned ios app, but still need to sign it before it can be distributed or install
+      - name: Build unsigned iOS
+        run: |
+          cd ios
+          xcodebuild build -workspace RytTransfer.xcworkspace -scheme RytTransfer -configuration Debug -sdk iphonesimulator -derivedDataPath ./
+          
+          # Create Payload folder and move .app file
+          mkdir payload
+          cp -R "./build/Products/Debug-iphoneos/RytTransfer.app" "./payload"
+          
+          #  Zip the Payload folder and rename to .ipa
+          zip -r "RytTransfer.ipa" "./payload"
+
+      - name: Upload iOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-ios
+          path: |
+            # Add more if you have .ipa, dSYM files, etc.
+            RytTransfer.ipa
+          retention-days: 5
