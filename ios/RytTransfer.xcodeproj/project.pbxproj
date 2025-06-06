@@ -8,28 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		1A805E9F2C32212C4DDD9E9B /* libPods-RytTransfer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F18BB988501DDFBACBBB1BEC /* libPods-RytTransfer.a */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		58CD393D549B762A1E5BE7CA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 26B30F4A99C6CC9F3001384A /* PrivacyInfo.xcprivacy */; };
-		98B59E2804C0FF2604D8243E /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEA67028CB95A8A97E13B60 /* ExpoModulesProvider.swift */; };
+		850FD0EC2AC6C2CFFC5BAE89 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A51D704A4D423FC127C88C /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		D8351C8C399B837EC9FE0417 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 96037E5FB827050AFAD08540 /* PrivacyInfo.xcprivacy */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+		FA93DA9B52F3C1B79BD1C8DC /* libPods-RytTransfer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A2451DD00D5841C40DCF20 /* libPods-RytTransfer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		13B07F961A680F5B00A75B9A /* RytTransfer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RytTransfer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = RytTransfer/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RytTransfer/Info.plist; sourceTree = "<group>"; };
-		26B30F4A99C6CC9F3001384A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = RytTransfer/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		9AC44278EE74BF52C37D1684 /* Pods-RytTransfer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RytTransfer.release.xcconfig"; path = "Target Support Files/Pods-RytTransfer/Pods-RytTransfer.release.xcconfig"; sourceTree = "<group>"; };
+		7B78D5FD83FB206B48948985 /* Pods-RytTransfer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RytTransfer.debug.xcconfig"; path = "Target Support Files/Pods-RytTransfer/Pods-RytTransfer.debug.xcconfig"; sourceTree = "<group>"; };
+		96037E5FB827050AFAD08540 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = RytTransfer/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = RytTransfer/SplashScreen.storyboard; sourceTree = "<group>"; };
-		ADEA67028CB95A8A97E13B60 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-RytTransfer/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		C9A2451DD00D5841C40DCF20 /* libPods-RytTransfer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RytTransfer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCA14B5F00AF8ADFBA0282A3 /* Pods-RytTransfer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RytTransfer.release.xcconfig"; path = "Target Support Files/Pods-RytTransfer/Pods-RytTransfer.release.xcconfig"; sourceTree = "<group>"; };
+		E4A51D704A4D423FC127C88C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-RytTransfer/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RytTransfer/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* RytTransfer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RytTransfer-Bridging-Header.h"; path = "RytTransfer/RytTransfer-Bridging-Header.h"; sourceTree = "<group>"; };
-		F18BB988501DDFBACBBB1BEC /* libPods-RytTransfer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RytTransfer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5DD4DA06AE1B1DB5702986C /* Pods-RytTransfer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RytTransfer.debug.xcconfig"; path = "Target Support Files/Pods-RytTransfer/Pods-RytTransfer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A805E9F2C32212C4DDD9E9B /* libPods-RytTransfer.a in Frameworks */,
+				FA93DA9B52F3C1B79BD1C8DC /* libPods-RytTransfer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				26B30F4A99C6CC9F3001384A /* PrivacyInfo.xcprivacy */,
+				96037E5FB827050AFAD08540 /* PrivacyInfo.xcprivacy */,
 			);
 			name = RytTransfer;
 			sourceTree = "<group>";
@@ -62,7 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				F18BB988501DDFBACBBB1BEC /* libPods-RytTransfer.a */,
+				C9A2451DD00D5841C40DCF20 /* libPods-RytTransfer.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -81,8 +81,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				A3F8079A053DAEAC03F92CD2 /* Pods */,
-				B0464CBD1A5A2BE38F06958E /* ExpoModulesProviders */,
+				F56299C743B84EB6727D6CBC /* Pods */,
+				B945B39859846129B8FFC64A /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -97,19 +97,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A3F8079A053DAEAC03F92CD2 /* Pods */ = {
+		B945B39859846129B8FFC64A /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				F5DD4DA06AE1B1DB5702986C /* Pods-RytTransfer.debug.xcconfig */,
-				9AC44278EE74BF52C37D1684 /* Pods-RytTransfer.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		B0464CBD1A5A2BE38F06958E /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				E334BBD7A06358D6DE625D55 /* RytTransfer */,
+				EFA9F392B0B969FF9D781B9A /* RytTransfer */,
 			);
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
@@ -123,12 +114,22 @@
 			path = RytTransfer/Supporting;
 			sourceTree = "<group>";
 		};
-		E334BBD7A06358D6DE625D55 /* RytTransfer */ = {
+		EFA9F392B0B969FF9D781B9A /* RytTransfer */ = {
 			isa = PBXGroup;
 			children = (
-				ADEA67028CB95A8A97E13B60 /* ExpoModulesProvider.swift */,
+				E4A51D704A4D423FC127C88C /* ExpoModulesProvider.swift */,
 			);
 			name = RytTransfer;
+			sourceTree = "<group>";
+		};
+		F56299C743B84EB6727D6CBC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B78D5FD83FB206B48948985 /* Pods-RytTransfer.debug.xcconfig */,
+				CCA14B5F00AF8ADFBA0282A3 /* Pods-RytTransfer.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "RytTransfer" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				DAAB471C526669BC66637FC6 /* [Expo] Configure project */,
+				6171CF74834D3B9B6EEF6D00 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				8B1552F8F18966994EE8CE2E /* [CP] Embed Pods Frameworks */,
+				597ECEFAA5FFBA5E40C1EF8A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -195,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				58CD393D549B762A1E5BE7CA /* PrivacyInfo.xcprivacy in Resources */,
+				D8351C8C399B837EC9FE0417 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +240,43 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		597ECEFAA5FFBA5E40C1EF8A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RytTransfer/Pods-RytTransfer-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RytTransfer/Pods-RytTransfer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6171CF74834D3B9B6EEF6D00 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-RytTransfer/expo-configure-project.sh\"\n";
+		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,43 +315,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RytTransfer/Pods-RytTransfer-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B1552F8F18966994EE8CE2E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RytTransfer/Pods-RytTransfer-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RytTransfer/Pods-RytTransfer-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DAAB471C526669BC66637FC6 /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-RytTransfer/expo-configure-project.sh\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -322,7 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				98B59E2804C0FF2604D8243E /* ExpoModulesProvider.swift in Sources */,
+				850FD0EC2AC6C2CFFC5BAE89 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,13 +332,12 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F5DD4DA06AE1B1DB5702986C /* Pods-RytTransfer.debug.xcconfig */;
+			baseConfigurationReference = 7B78D5FD83FB206B48948985 /* Pods-RytTransfer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RytTransfer/RytTransfer.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K35V7DUTS;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -368,13 +368,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9AC44278EE74BF52C37D1684 /* Pods-RytTransfer.release.xcconfig */;
+			baseConfigurationReference = CCA14B5F00AF8ADFBA0282A3 /* Pods-RytTransfer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RytTransfer/RytTransfer.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K35V7DUTS;
 				INFOPLIST_FILE = RytTransfer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -452,7 +451,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -507,7 +509,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
