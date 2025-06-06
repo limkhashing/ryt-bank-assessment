@@ -3,10 +3,11 @@ name: React Native Staging CI/CD
 on:
   push:
     branches: [ development ]
+  workflow_dispatch:
 
 jobs:
-  lint-and-test:
-    name: Lint and Test
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -30,7 +31,7 @@ jobs:
 
   build-android:
     name: Build Android
-    needs: lint-and-test
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -59,13 +60,18 @@ jobs:
         run: npm ci
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebug
+        run: |
+          cd android
+          ./gradlew assembleDebug
 
       - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-android
-          path: build/android/app-release.apk
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            # Add more if you have aab, mapping files, etc.
+            # android/app/build/outputs/bundle/debug/app-debug.aab
           retention-days: 5
 
 #  build-ios:
