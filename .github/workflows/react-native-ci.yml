@@ -105,11 +105,11 @@ jobs:
       - name: Build unsigned iOS
         run: |
           cd ios
-          xcodebuild build -workspace RytTransfer.xcworkspace -scheme RytTransfer -configuration Debug -sdk iphonesimulator -derivedDataPath ./
-          
+          xcodebuild build -workspace RytTransfer.xcworkspace -scheme RytTransfer CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" -configuration Debug -derivedDataPath ./
+
           # Create Payload folder and move .app file
           mkdir payload
-          cp -R "./build/Products/Debug-iphoneos/RytTransfer.app" "./payload"
+          cp -R "./Build/Products/Debug-iphoneos/RytTransfer.app" "./payload"
           
           #  Zip the Payload folder and rename to .ipa
           zip -r "RytTransfer.ipa" "./payload"
