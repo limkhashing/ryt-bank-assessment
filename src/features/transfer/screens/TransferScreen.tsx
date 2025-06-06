@@ -1,13 +1,13 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback, useRef, useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-controller';
 
 import {Button, Card, Input} from '../../../components';
 import {COLORS, FONT_SIZES, SPACING} from '../../../components/constants';
 import {formatCurrency} from '../../../utils';
 import {useAppSelector} from '../hooks';
 import {RootStackParamList} from '../types';
-import {KeyboardAwareScrollView} from "react-native-keyboard-controller";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Transfer'>;
 
@@ -76,53 +76,53 @@ export const TransferScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   return (
-      <KeyboardAwareScrollView>
-        <View style={styles.container}>
-          <Card style={styles.userInfoCard}>
-            <Text style={styles.userTitle}>From Account</Text>
-            <Text style={styles.userName}>{currentUser?.name}</Text>
-            <Text style={styles.userPhone}>{currentUser?.phoneNumber}</Text>
-            <View style={styles.balanceRow}>
-              <Text style={styles.balanceLabel}>Available Balance:</Text>
-              <Text style={styles.balanceAmount}>
-                {currentUser ? formatCurrency(currentUser.balance) : 'RM0.00'}
-              </Text>
-            </View>
-          </Card>
-          <Card style={styles.transferCard}>
-            <Input
-                ref={amountInputRef}
-                label="Amount"
-                value={displayAmount}
-                onChangeText={handleAmountChange}
-                keyboardType="numeric"
-                placeholder="RM0.00"
-                error={error}
-                style={styles.input}
-                returnKeyType="next"
-                onSubmitEditing={handleAmountSubmit}
-                blurOnSubmit={false}
-            />
-            <Input
-                ref={noteInputRef}
-                label="Note (Optional)"
-                value={note}
-                onChangeText={setNote}
-                placeholder="What's this transfer for?"
-                style={styles.input}
-                returnKeyType="done"
-                onSubmitEditing={handleNoteSubmit}
-                blurOnSubmit={true}
-            />
-            <Button
-                title="Continue"
-                onPress={handleContinue}
-                disabled={!amount || parseFloat(amount) <= 0 || !!error}
-                style={styles.button}
-            />
-          </Card>
-        </View>
-      </KeyboardAwareScrollView>
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
+        <Card style={styles.userInfoCard}>
+          <Text style={styles.userTitle}>From Account</Text>
+          <Text style={styles.userName}>{currentUser?.name}</Text>
+          <Text style={styles.userPhone}>{currentUser?.phoneNumber}</Text>
+          <View style={styles.balanceRow}>
+            <Text style={styles.balanceLabel}>Available Balance:</Text>
+            <Text style={styles.balanceAmount}>
+              {currentUser ? formatCurrency(currentUser.balance) : 'RM0.00'}
+            </Text>
+          </View>
+        </Card>
+        <Card style={styles.transferCard}>
+          <Input
+            ref={amountInputRef}
+            label="Amount"
+            value={displayAmount}
+            onChangeText={handleAmountChange}
+            keyboardType="numeric"
+            placeholder="RM0.00"
+            error={error}
+            style={styles.input}
+            returnKeyType="next"
+            onSubmitEditing={handleAmountSubmit}
+            blurOnSubmit={false}
+          />
+          <Input
+            ref={noteInputRef}
+            label="Note (Optional)"
+            value={note}
+            onChangeText={setNote}
+            placeholder="What's this transfer for?"
+            style={styles.input}
+            returnKeyType="done"
+            onSubmitEditing={handleNoteSubmit}
+            blurOnSubmit={true}
+          />
+          <Button
+            title="Continue"
+            onPress={handleContinue}
+            disabled={!amount || parseFloat(amount) <= 0 || !!error}
+            style={styles.button}
+          />
+        </Card>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

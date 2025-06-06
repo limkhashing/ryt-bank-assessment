@@ -45,7 +45,7 @@ export default [
       ...reactPlugin.configs.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
       ...jsxA11yPlugin.configs.recommended.rules,
-        'prettier/prettier': ['error', {}, {usePrettierrc: true}],
+      'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'jsx-a11y/accessible-emoji': 'off',
@@ -67,7 +67,7 @@ export default [
         {
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
           'newlines-between': 'always',
-            alphabetize: {order: 'asc', caseInsensitive: true},
+          alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
       'import/default': 'off',
@@ -76,6 +76,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/', 'dist/', 'build/'],
+    ignores: ['node_modules/', 'dist/', 'build/', 'android/', 'ios/', 'coverage/', 'public/'],
   },
 ];
