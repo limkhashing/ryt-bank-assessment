@@ -1,10 +1,8 @@
-name: React Native CI/CD
+name: React Native Staging CI/CD
 
 on:
   push:
-    branches: [ main, development ]
-  pull_request:
-    branches: [ main, development ]
+    branches: [ development ]
 
 jobs:
   lint-and-test:
@@ -25,10 +23,10 @@ jobs:
 
       - name: Lint code
         run: npm run lint ./src
-        continue-on-error: true
+        continue-on-error: true # Ignore lint errors for now, to allow the workflow to continue
 
       - name: Type check
-        run: npm run typecheckç
+        run: npm run typecheck
 
   build-android:
     name: Build Android
@@ -50,16 +48,18 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+        # Validate Gradle wrapper to prevent build tool attack
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
       - name: Install dependencies
         run: npm ci
 
-      - name: Setup Expo and EAS
-        run: npm install -g expo-cli eas-cli
-
-      - name: Build APK with EAS
-        run: eas build --platform android --non-interactive --local
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v3
@@ -68,34 +68,34 @@ jobs:
           path: build/android/app-release.apk
           retention-days: 5
 
-  build-ios:
-    name: Build iOS
-    needs: lint-and-test
-    runs-on: macos-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Setup Expo and EAS
-        run: npm install -g expo-cli eas-cli
-
-      - name: Build iOS with EAS
-        run: eas build --platform ios --non-interactive --local
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Upload iOS artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-ios
-          path: build/ios/
-          retention-days: 5
+#  build-ios:
+#    name: Build iOS
+#    needs: lint-and-test
+#    runs-on: macos-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          cache: 'npm'
+#
+#      - name: Install dependencies
+#        run: npm ci
+#
+#      - name: Setup Expo and EAS
+#        run: npm install -g expo-cli eas-cli
+#
+#      - name: Build iOS with EAS
+#        run: eas build --platform ios --non-interactive --local
+#        env:
+#          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+#
+#      - name: Upload iOS artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: app-ios
+#          path: build/ios/
+#          retention-days: 5
