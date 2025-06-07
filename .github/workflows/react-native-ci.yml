@@ -120,5 +120,5 @@ jobs:
           name: app-ios
           path: |
             # Add more if you have .ipa, dSYM files, etc.
-            RytTransfer.ipa
+            ios/RytTransfer.ipa
           retention-days: 5

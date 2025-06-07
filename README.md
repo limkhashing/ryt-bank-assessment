@@ -10,6 +10,7 @@ A modern and secure payment transfer application built with React Native, TypeSc
 - 🎨 Modern UI with smooth animations
 - 📱 Cross-platform (iOS & Android)
 - 🔄 Simulated API integration
+  - To simulate success/failed network request, go to `src/lib/apiClient.ts` and change the boolean flag `shouldSucceed` to `true/false`
 
 ## Tech Stack
 
@@ -67,3 +68,12 @@ A modern and secure payment transfer application built with React Native, TypeSc
    ```
 
 2. Follow the Expo CLI instructions to open the app in your simulator or device.
+
+# Future Improvements
+
+1. Add offline support with local storage
+2. Implement real API integration
+3. Show Transaction history with Search and Filters
+4. Add push notifications
+5. Support for multiple currencies
+6. Dark mode support
