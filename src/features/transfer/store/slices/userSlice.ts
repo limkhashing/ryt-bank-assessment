@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-import mockUser from '../../data/mockUser.json';
 import {User} from '../../types';
 
 interface UserState {
@@ -10,7 +9,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  currentUser: mockUser as User,
+  currentUser: null,
   loading: false,
   error: null,
 };

@@ -1,7 +1,7 @@
-# Project Structure (Bulletproof React Inspired)
+# Project Structure
 
 This project follows a structure inspired by [bulletproof-react](https://github.com/alan2207/bulletproof-react) for
-scalable and maintainable React/React Native applications.
+maintainable React/React Native applications. Each feature is encapsulated with its own API logic, screens, state management, and utilities.
 
 ```
 src/
