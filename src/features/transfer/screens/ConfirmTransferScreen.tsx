@@ -96,7 +96,10 @@ export const ConfirmTransferScreen: React.FC<Props> = ({ navigation, route }) =>
       dispatch(addTransaction(transaction));
       // Only deduct balance if transfer was successful
       if (currentUser && transaction.status === TransactionStatus.COMPLETED) {
-        dispatch(updateBalance(currentUser.balance - amount));
+        const newBalance = currentUser.balance - amount;
+        dispatch(updateBalance(newBalance));
+        // Update the balance in transferService to keep it in sync
+        transferService.updateUserBalance(newBalance);
       }
 
       // Navigate to receipt screen

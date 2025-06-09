@@ -19,7 +19,7 @@ A modern and secure payment transfer application built with React Native, TypeSc
 - Redux Toolkit for state management
 - React Navigation for routing
 - Axios for API requests
-- React Native Biometrics
+- Expo Local Authentication for biometric authentication
 
 ## Getting Started
 
@@ -46,7 +46,7 @@ A modern and secure payment transfer application built with React Native, TypeSc
    npm install
    ```
 
-### Running with Expo (Recommended)
+### Running with Expo
 
 1. Start the Expo development server:
 
@@ -58,16 +58,18 @@ A modern and secure payment transfer application built with React Native, TypeSc
    - Press `i` to open in iOS Simulator
    - Press `a` to open in Android Emulator
 
-### Running a Development Build (Bare Workflow)
+### Running a Development Build (Recommended)
 
-1. Build the app for development:
+1. Build the app for development: 
 
    ```bash
+   # Add --device flag to select a specific device
    npx expo run:ios   # for iOS
-   npx expo run:android   # for Android
+   npx expo run:android  # for Android
    ```
 
-2. Follow the Expo CLI instructions to open the app in your simulator or device.
+# Demo Video
+[Demo.mp4](Demo.mp4)
 
 # Future Improvements
 

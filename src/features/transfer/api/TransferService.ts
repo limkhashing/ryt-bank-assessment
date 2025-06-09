@@ -3,6 +3,9 @@ import {Logger} from '../../../utils/Logger';
 import {ApiResponse, Recipient, Transaction, TransactionStatus, User} from '../types';
 
 class TransferService {
+  // Add a property to store the latest user data with updated balance
+  private latestUserData: User | null = null;
+
   async getCurrentUser(): Promise<ApiResponse<User>> {
     try {
       // Simulate API call using Axios
@@ -12,12 +15,30 @@ class TransferService {
 
       const mockUser = require('../data/mockUser.json');
       const user = await simulateApiCall('/users/current', mockUser, { method: 'GET' });
+
+      // If we have updated user data with a modified balance, use that instead
+      if (this.latestUserData) {
+        return { success: true, data: this.latestUserData };
+      }
+
+      // First time loading, store the initial user data
+      this.latestUserData = user;
       return { success: true, data: user };
     } catch (error) {
       Logger.error('Error fetching user data', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Failed to fetch user data',
+      };
+    }
+  }
+
+  // Add method to update user balance
+  updateUserBalance(newBalance: number): void {
+    if (this.latestUserData) {
+      this.latestUserData = {
+        ...this.latestUserData,
+        balance: newBalance
       };
     }
   }
