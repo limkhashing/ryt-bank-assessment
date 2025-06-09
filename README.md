@@ -69,7 +69,8 @@ A modern and secure payment transfer application built with React Native, TypeSc
    ```
 
 # Demo Video
-[Demo.mp4](Demo.mp4)
+
+https://github.com/user-attachments/assets/471aff3d-fba5-412a-a183-e5730eab343b
 
 # Future Improvements
 
